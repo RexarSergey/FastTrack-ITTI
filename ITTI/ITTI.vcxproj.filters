@@ -137,5 +137,11 @@
     <ClInclude Include="PSR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ICSA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ICSR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
