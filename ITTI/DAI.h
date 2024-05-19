@@ -1,4 +1,4 @@
-// Файл выполнил Козлов Михаил
+// The file was executed by Mikhail Kozlov
 
 #pragma once
 
