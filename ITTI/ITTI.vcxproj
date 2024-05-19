@@ -130,6 +130,7 @@
     <ClCompile Include="ITTI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PSR.h" />
     <ClInclude Include="rapidjson\allocators.h" />
     <ClInclude Include="rapidjson\cursorstreamwrapper.h" />
     <ClInclude Include="rapidjson\document.h" />
