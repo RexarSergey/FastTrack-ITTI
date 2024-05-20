@@ -1,4 +1,4 @@
-//Корсакова Юлия
+//Korsakova Yulia
 #pragma once
 
 #include "types.hpp"
