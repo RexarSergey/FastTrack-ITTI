@@ -1,4 +1,5 @@
 // Pudovkin Dmitriy
+
 #include <iostream>
 #include <memory>
 #include <cstring>
