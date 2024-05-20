@@ -10,11 +10,23 @@
 
 using namespace rapidjson;
 
+struct OCTET_STRING_Deleter {
+    void operator()(uint8_t* p) const {
+        delete[] p;
+    }
+};
+
 struct AdmUeReleaseRequest_Deleter {
     void operator()(AdmUeReleaseRequest_t* p) const {
-        delete[] p->redirectedCarrierInfo.buf;
-        delete[] p->idleModeMobilityControlInfo.buf;
-        delete p;
+        if (p) {
+            if (p->redirectedCarrierInfo.buf) {
+                delete[] p->redirectedCarrierInfo.buf;
+            }
+            if (p->idleModeMobilityControlInfo.buf) {
+                delete[] p->idleModeMobilityControlInfo.buf;
+            }
+            delete p;
+        }
     }
 };
 
@@ -25,35 +37,41 @@ struct AURR {
         auto& allocator = config.GetAllocator();
         config.SetObject();
 
-        config.AddMember("rrccause", Value().SetUint64(message.rrccause), allocator);
-        config.AddMember("rrc_cause_value_t", Value().SetInt64(message.rrc_cause_value_t), allocator);
+        config.AddMember("rrccause", static_cast<uint64_t>(message.rrccause), allocator);
+        config.AddMember("rrc_cause_value_t", static_cast<int64_t>(message.rrc_cause_value_t), allocator);
 
-        config.AddMember("redirectedCarrierInfo",
-            message.redirectedCarrierInfo.size ? Value(reinterpret_cast<const char*>(message.redirectedCarrierInfo.buf), static_cast<rapidjson::SizeType>(message.redirectedCarrierInfo.size), allocator) : Value("", allocator),
-            allocator);
+        if (message.redirectedCarrierInfo.buf && message.redirectedCarrierInfo.size > 0) {
+            config.AddMember("redirectedCarrierInfo", Value(reinterpret_cast<const char*>(message.redirectedCarrierInfo.buf), message.redirectedCarrierInfo.size, allocator), allocator);
+        }
+        else {
+            config.AddMember("redirectedCarrierInfo", "", allocator);
+        }
 
-        config.AddMember("idleModeMobilityControlInfo",
-            message.idleModeMobilityControlInfo.size ? Value(reinterpret_cast<const char*>(message.idleModeMobilityControlInfo.buf), static_cast<rapidjson::SizeType>(message.idleModeMobilityControlInfo.size), allocator) : Value("", allocator),
-            allocator);
+        if (message.idleModeMobilityControlInfo.buf && message.idleModeMobilityControlInfo.size > 0) {
+            config.AddMember("idleModeMobilityControlInfo", Value(reinterpret_cast<const char*>(message.idleModeMobilityControlInfo.buf), message.idleModeMobilityControlInfo.size, allocator), allocator);
+        }
+        else {
+            config.AddMember("idleModeMobilityControlInfo", "", allocator);
+        }
 
         Value _asn_ctx(kObjectType);
-        _asn_ctx.AddMember("phase", Value().SetUint(message._asn_ctx.phase), allocator);
-        _asn_ctx.AddMember("step", Value().SetUint(message._asn_ctx.step), allocator);
-        _asn_ctx.AddMember("context", Value().SetUint(message._asn_ctx.context), allocator);
-        _asn_ctx.AddMember("left", Value().SetUint(message._asn_ctx.left), allocator);
+        _asn_ctx.AddMember("phase", message._asn_ctx.phase, allocator);
+        _asn_ctx.AddMember("step", message._asn_ctx.step, allocator);
+        _asn_ctx.AddMember("context", message._asn_ctx.context, allocator);
+        _asn_ctx.AddMember("left", message._asn_ctx.left, allocator);
         config.AddMember("_asn_ctx", _asn_ctx, allocator);
     }
 
     void deserialize(const Document& config) {
         if (config.HasMember("rrccause") && config["rrccause"].IsUint64()) {
-            message.rrccause = config["rrccause"].GetUint64();
+            message.rrccause = static_cast<uint32_t>(config["rrccause"].GetUint64());
         }
         else {
             std::cerr << "Error: Missing or invalid 'rrccause'." << std::endl;
         }
 
         if (config.HasMember("rrc_cause_value_t") && config["rrc_cause_value_t"].IsInt64()) {
-            message.rrc_cause_value_t = config["rrc_cause_value_t"].GetInt64();
+            message.rrc_cause_value_t = static_cast<int32_t>(config["rrc_cause_value_t"].GetInt64());
         }
         else {
             std::cerr << "Error: Missing or invalid 'rrc_cause_value_t'." << std::endl;
@@ -61,7 +79,14 @@ struct AURR {
 
         if (config.HasMember("redirectedCarrierInfo") && config["redirectedCarrierInfo"].IsString()) {
             const std::string& redirectedCarrierInfoStr = config["redirectedCarrierInfo"].GetString();
-            setBuffer(message.redirectedCarrierInfo, redirectedCarrierInfoStr);
+            message.redirectedCarrierInfo.size = redirectedCarrierInfoStr.length();
+            if (message.redirectedCarrierInfo.buf) {
+                delete[] message.redirectedCarrierInfo.buf;
+            }
+            if (message.redirectedCarrierInfo.size > 0) {
+                message.redirectedCarrierInfo.buf = new uint8_t[message.redirectedCarrierInfo.size];
+                memcpy(message.redirectedCarrierInfo.buf, redirectedCarrierInfoStr.data(), message.redirectedCarrierInfo.size);
+            }
         }
         else {
             std::cerr << "Error: Missing or invalid 'redirectedCarrierInfo'." << std::endl;
@@ -69,7 +94,14 @@ struct AURR {
 
         if (config.HasMember("idleModeMobilityControlInfo") && config["idleModeMobilityControlInfo"].IsString()) {
             const std::string& idleModeMobilityControlInfoStr = config["idleModeMobilityControlInfo"].GetString();
-            setBuffer(message.idleModeMobilityControlInfo, idleModeMobilityControlInfoStr);
+            message.idleModeMobilityControlInfo.size = idleModeMobilityControlInfoStr.length();
+            if (message.idleModeMobilityControlInfo.buf) {
+                delete[] message.idleModeMobilityControlInfo.buf;
+            }
+            if (message.idleModeMobilityControlInfo.size > 0) {
+                message.idleModeMobilityControlInfo.buf = new uint8_t[message.idleModeMobilityControlInfo.size];
+                memcpy(message.idleModeMobilityControlInfo.buf, idleModeMobilityControlInfoStr.data(), message.idleModeMobilityControlInfo.size);
+            }
         }
         else {
             std::cerr << "Error: Missing or invalid 'idleModeMobilityControlInfo'." << std::endl;
@@ -77,21 +109,22 @@ struct AURR {
 
         if (config.HasMember("_asn_ctx") && config["_asn_ctx"].IsObject()) {
             const Value& asnCtxObj = config["_asn_ctx"];
-            message._asn_ctx.phase = asnCtxObj["phase"].GetUint();
-            message._asn_ctx.step = asnCtxObj["step"].GetUint();
-            message._asn_ctx.context = asnCtxObj["context"].GetUint();
-            message._asn_ctx.left = asnCtxObj["left"].GetUint();
+            if (asnCtxObj.HasMember("phase") && asnCtxObj["phase"].IsUint()) {
+                message._asn_ctx.phase = asnCtxObj["phase"].GetUint();
+            }
+            if (asnCtxObj.HasMember("step") && asnCtxObj["step"].IsUint()) {
+                message._asn_ctx.step = asnCtxObj["step"].GetUint();
+            }
+            if (asnCtxObj.HasMember("context") && asnCtxObj["context"].IsUint()) {
+                message._asn_ctx.context = asnCtxObj["context"].GetUint();
+            }
+            if (asnCtxObj.HasMember("left") && asnCtxObj["left"].IsUint()) {
+                message._asn_ctx.left = asnCtxObj["left"].GetUint();
+            }
         }
         else {
             std::cerr << "Error: Missing or invalid '_asn_ctx'." << std::endl;
         }
-    }
-
-    void setBuffer(OCTET_STRING_t& buffer, const std::string& data) {
-        delete[] buffer.buf;
-        buffer.size = data.size();
-        buffer.buf = new uint8_t[buffer.size];
-        memcpy(buffer.buf, data.data(), buffer.size);
     }
 
 private:
@@ -104,16 +137,21 @@ int main() {
     request1->rrc_cause_value_t = 456;
 
     const char* redirectedCarrierInfoData = "123456";
-    const char* idleModeMobilityControlInfoData = "789012";
+    request1->redirectedCarrierInfo.size = strlen(redirectedCarrierInfoData);
+    request1->redirectedCarrierInfo.buf = new uint8_t[request1->redirectedCarrierInfo.size];
+    memcpy(request1->redirectedCarrierInfo.buf, redirectedCarrierInfoData, request1->redirectedCarrierInfo.size);
 
-    AURR aurr1(*request1);
-    aurr1.setBuffer(request1->redirectedCarrierInfo, redirectedCarrierInfoData);
-    aurr1.setBuffer(request1->idleModeMobilityControlInfo, idleModeMobilityControlInfoData);
+    const char* idleModeMobilityControlInfoData = "789012";
+    request1->idleModeMobilityControlInfo.size = strlen(idleModeMobilityControlInfoData);
+    request1->idleModeMobilityControlInfo.buf = new uint8_t[request1->idleModeMobilityControlInfo.size];
+    memcpy(request1->idleModeMobilityControlInfo.buf, idleModeMobilityControlInfoData, request1->idleModeMobilityControlInfo.size);
 
     request1->_asn_ctx.phase = 1;
     request1->_asn_ctx.step = 2;
     request1->_asn_ctx.context = 3;
     request1->_asn_ctx.left = 4;
+
+    AURR aurr1(*request1);
 
     Document doc1;
     aurr1.serialize(doc1);
@@ -190,8 +228,14 @@ int main() {
         std::cerr << "Deserialization failed!" << std::endl;
     }
 
-    delete[] request2.redirectedCarrierInfo.buf;
-    delete[] request2.idleModeMobilityControlInfo.buf;
+    if (request2.redirectedCarrierInfo.buf) {
+        delete[] request2.redirectedCarrierInfo.buf;
+        request2.redirectedCarrierInfo.buf = nullptr;
+    }
+    if (request2.idleModeMobilityControlInfo.buf) {
+        delete[] request2.idleModeMobilityControlInfo.buf;
+        request2.idleModeMobilityControlInfo.buf = nullptr;
+    }
 
     return 0;
 }
