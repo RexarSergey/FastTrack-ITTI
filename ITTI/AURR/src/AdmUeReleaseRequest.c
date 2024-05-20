@@ -178,4 +178,3 @@ asn_TYPE_descriptor_t asn_DEF_AdmUeReleaseRequest = {
 	&asn_SPC_AdmUeReleaseRequest_specs_1	/* Additional specs */
 };
 
-

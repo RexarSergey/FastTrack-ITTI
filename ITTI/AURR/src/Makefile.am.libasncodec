@@ -1,0 +1,67 @@
+ASN_MODULE_SRCS=	\
+	src/AdmUeReleaseRequest.c
+
+ASN_MODULE_HDRS=	\
+	src/AdmUeReleaseRequest.h
+
+ASN_MODULE_HDRS+=src/OPEN_TYPE.h
+ASN_MODULE_SRCS+=src/OPEN_TYPE.c
+ASN_MODULE_HDRS+=src/constr_CHOICE.h
+ASN_MODULE_HDRS+=src/INTEGER.h
+ASN_MODULE_SRCS+=src/INTEGER.c
+ASN_MODULE_HDRS+=src/NativeInteger.h
+ASN_MODULE_SRCS+=src/NativeInteger.c
+ASN_MODULE_SRCS+=src/constr_CHOICE.c
+ASN_MODULE_HDRS+=src/constr_SEQUENCE.h
+ASN_MODULE_SRCS+=src/constr_SEQUENCE.c
+ASN_MODULE_HDRS+=src/asn_application.h
+ASN_MODULE_SRCS+=src/asn_application.c
+ASN_MODULE_HDRS+=src/asn_ioc.h
+ASN_MODULE_HDRS+=src/asn_system.h
+ASN_MODULE_HDRS+=src/asn_codecs.h
+ASN_MODULE_HDRS+=src/asn_internal.h
+ASN_MODULE_SRCS+=src/asn_internal.c
+ASN_MODULE_HDRS+=src/asn_random_fill.h
+ASN_MODULE_SRCS+=src/asn_random_fill.c
+ASN_MODULE_HDRS+=src/asn_bit_data.h
+ASN_MODULE_SRCS+=src/asn_bit_data.c
+ASN_MODULE_HDRS+=src/OCTET_STRING.h
+ASN_MODULE_SRCS+=src/OCTET_STRING.c
+ASN_MODULE_HDRS+=src/BIT_STRING.h
+ASN_MODULE_SRCS+=src/BIT_STRING.c
+ASN_MODULE_SRCS+=src/asn_codecs_prim.c
+ASN_MODULE_HDRS+=src/asn_codecs_prim.h
+ASN_MODULE_HDRS+=src/ber_tlv_length.h
+ASN_MODULE_SRCS+=src/ber_tlv_length.c
+ASN_MODULE_HDRS+=src/ber_tlv_tag.h
+ASN_MODULE_SRCS+=src/ber_tlv_tag.c
+ASN_MODULE_HDRS+=src/ber_decoder.h
+ASN_MODULE_SRCS+=src/ber_decoder.c
+ASN_MODULE_HDRS+=src/der_encoder.h
+ASN_MODULE_SRCS+=src/der_encoder.c
+ASN_MODULE_HDRS+=src/constr_TYPE.h
+ASN_MODULE_SRCS+=src/constr_TYPE.c
+ASN_MODULE_HDRS+=src/constraints.h
+ASN_MODULE_SRCS+=src/constraints.c
+ASN_MODULE_HDRS+=src/xer_support.h
+ASN_MODULE_SRCS+=src/xer_support.c
+ASN_MODULE_HDRS+=src/xer_decoder.h
+ASN_MODULE_SRCS+=src/xer_decoder.c
+ASN_MODULE_HDRS+=src/xer_encoder.h
+ASN_MODULE_SRCS+=src/xer_encoder.c
+ASN_MODULE_HDRS+=src/per_support.h
+ASN_MODULE_SRCS+=src/per_support.c
+ASN_MODULE_HDRS+=src/per_decoder.h
+ASN_MODULE_SRCS+=src/per_decoder.c
+ASN_MODULE_HDRS+=src/per_encoder.h
+ASN_MODULE_SRCS+=src/per_encoder.c
+ASN_MODULE_HDRS+=src/per_opentype.h
+ASN_MODULE_SRCS+=src/per_opentype.c
+
+ASN_MODULE_CFLAGS=-DASN_DISABLE_OER_SUPPORT 
+
+lib_LTLIBRARIES+=libasncodec.la
+libasncodec_la_SOURCES=$(ASN_MODULE_SRCS) $(ASN_MODULE_HDRS)
+libasncodec_la_CPPFLAGS=-I$(top_srcdir)/src/
+libasncodec_la_CFLAGS=$(ASN_MODULE_CFLAGS)
+libasncodec_la_LDFLAGS=-lm
