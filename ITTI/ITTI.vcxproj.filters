@@ -15,7 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ITTI.cpp">
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DAI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -141,6 +144,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ICSR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="structure_interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
