@@ -24,6 +24,9 @@
     <ClCompile Include="PSR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ICSA\ICSA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidjson\error\en.h">
@@ -143,9 +146,6 @@
     <ClInclude Include="PSR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ICSA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ICSR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -153,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="structure_interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ICSA\ICSA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
