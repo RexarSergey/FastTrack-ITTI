@@ -21,6 +21,9 @@
     <ClCompile Include="DAI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PSR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidjson\error\en.h">

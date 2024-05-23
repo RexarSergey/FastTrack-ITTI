@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="DAI.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PSR.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DAI.h" />
