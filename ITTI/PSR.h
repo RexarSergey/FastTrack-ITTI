@@ -7,6 +7,7 @@
 
 class PSR: public StructureInterface {
 public:
+    PSR() = default;
     PSR(const vran::s1ap::lte::PathSwitchRequest& message);
 
     void serialize(rapidjson::Document& config) const override;
@@ -16,6 +17,4 @@ private:
     vran::s1ap::lte::PathSwitchRequest message_;
 };
 
-std::unique_ptr<PSR> GetFilledDai();
-
-
+std::unique_ptr<PSR> GetFilledPsr();

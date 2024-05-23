@@ -109,7 +109,7 @@ void PSR::deserialize(const rapidjson::Document& config) {
     }
 }
 
-std::unique_ptr<PSR> GetFilledDai() {
+std::unique_ptr<PSR> GetFilledPsr() {
     using namespace vran::cplane::common;
     vran::s1ap::lte::PathSwitchRequest message;
     message.cp_ue_id = 1234;

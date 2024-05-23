@@ -9,6 +9,7 @@
 
 class DAI: public StructureInterface{
 public:
+    DAI() = default;
     DAI(const vran::rrc_du::DrbAdditionalInfo& message);
 
     void serialize(rapidjson::Document& config) const override;

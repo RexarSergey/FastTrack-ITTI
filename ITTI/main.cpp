@@ -4,13 +4,21 @@
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/writer.h"
+#include "PSR.h"
 
 #include <deque>
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include <string>
+#include <mutex>
 #include <sstream>
+#include <stdexcept>
+#include <string>
+#include <thread>
+#include <vector>
+
+std::mutex deque_mtx;
+std::condition_variable deque_cv;
 
 std::deque<std::unique_ptr<StructureInterface>> message_deque;
 
@@ -34,28 +42,45 @@ rapidjson::Document ReadJson(const std::string& file_name) {
     return doc;
 }
 
-void AddToMessageDeque(const rapidjson::Document& doc) {
-    if (doc.HasMember("drb_additional_info")) {
-        using namespace vran::cplane::common;
-        vran::rrc_du::DrbAdditionalInfo message;
-        std::unique_ptr<DAI> mes = std::make_unique<DAI>(message);
-        mes->deserialize(doc);
+void AddToMessageDeque(const std::vector<rapidjson::Document>& documents) {
+    using namespace vran::cplane::common;
+    for (int id = 0; id < documents.size(); ++id) {
+        std::unique_ptr<StructureInterface> mes;
+        if (documents[id].HasMember("drb_additional_info")) {
+            mes = std::make_unique<DAI>();
+        }
+        else if (documents[id].HasMember("path_switch_request")) {
+            mes = std::make_unique<PSR>();
+        }
+        else {
+            throw std::invalid_argument("Unknown structure name");
+        }
+        mes->deserialize(documents[id]);
+        mes->SetId(id);
+        std::lock_guard<std::mutex> lock(deque_mtx);
         message_deque.push_back(std::move(mes));
+        deque_cv.notify_one();
     }
 }
 
 void Worker() {
-    if (!message_deque.empty()) {
+    while (true) {
+        std::unique_lock<std::mutex> lock(deque_mtx);
+        deque_cv.wait(lock, [] { return !message_deque.empty(); });
+
         std::unique_ptr<StructureInterface> mes = std::move(message_deque.front());
         message_deque.pop_front();
-        CreateJson(std::move(mes), "final.json");
+        const std::string id = std::to_string(mes->GetId());
+        lock.unlock();
 
-        std::ifstream stream1("original.json", std::ios::binary);
-        std::ifstream stream2("final.json", std::ios::binary);
+        CreateJson(std::move(mes), id + "_final.json");
 
-        if (std::equal(std::istreambuf_iterator<char>(stream1.rdbuf()),
-                        std::istreambuf_iterator<char>(),
-                        std::istreambuf_iterator<char>(stream2.rdbuf()))) {
+        std::ifstream original(id + "_original.json", std::ios::binary);
+        std::ifstream final(id + "_final.json", std::ios::binary);
+
+        if (std::equal(std::istreambuf_iterator<char>(original.rdbuf()),
+            std::istreambuf_iterator<char>(),
+            std::istreambuf_iterator<char>(final.rdbuf()))) {
             std::cout << "Pas\n";
         }
         else {
@@ -65,8 +90,18 @@ void Worker() {
 }
 
 int main(){
-    CreateJson(GetFilledDai(), "original.json");
-    rapidjson::Document doc = ReadJson("original.json");
-    AddToMessageDeque(doc);
-    Worker();
+    int structures_count = 0;
+    CreateJson(GetFilledDai(), std::to_string(structures_count++) + "_original.json");
+    CreateJson(GetFilledPsr(), std::to_string(structures_count++) + "_original.json");
+
+    std::vector<rapidjson::Document> documents;
+    documents.reserve(structures_count);
+    for (int id = 0; id < structures_count; ++id) {
+        documents.push_back(ReadJson(std::to_string(id) + "_original.json"));
+    }
+    std::thread send_messages(AddToMessageDeque, std::ref(documents));
+    std::thread worker(Worker);
+
+    send_messages.join();
+    worker.join();
 }
