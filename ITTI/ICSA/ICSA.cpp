@@ -1,6 +1,7 @@
 #include "ICSA.h"
+#include <limits>
 
-void ICSA::serialize(Document& config)
+void ICSA::serialize(Document& config) const
 {
 	Document::AllocatorType& allocator = config.GetAllocator();
 	config.SetObject();
@@ -50,7 +51,7 @@ void ICSA::deserialize(const Document& config)
 	cdrxc_deserialize(icsa);
 }
 
-void ICSA::asn_ctx_serialize(Value& _asn_ctx, asn_struct_ctx_t& root, Document::AllocatorType& allocator)
+void ICSA::asn_ctx_serialize(Value& _asn_ctx, asn_struct_ctx_t& root, Document::AllocatorType& allocator) const 
 {
 	_asn_ctx.AddMember("phase", root.phase, allocator);
 	_asn_ctx.AddMember("step", root.step, allocator);
@@ -59,7 +60,7 @@ void ICSA::asn_ctx_serialize(Value& _asn_ctx, asn_struct_ctx_t& root, Document::
 	// TODO // _asn_ctx.AddMember("ptr", root.ptr, allocator);
 	_asn_ctx.AddMember("ptr", kNullType, allocator);
 
-	_asn_ctx.AddMember("left", root.left, allocator);
+	_asn_ctx.AddMember("left", static_cast<unsigned>(root.left), allocator);
 }
 
 void ICSA::asn_ctx_deserialize(asn_struct_ctx_t& asn_ctx, Value::ConstObject& obj)
@@ -71,7 +72,7 @@ void ICSA::asn_ctx_deserialize(asn_struct_ctx_t& asn_ctx, Value::ConstObject& ob
 	asn_ctx.left = obj["left"].GetUint();
 }
 
-void ICSA::mc_serialize(Value& measConfig, Document::AllocatorType& allocator)
+void ICSA::mc_serialize(Value& measConfig, Document::AllocatorType& allocator) const 
 {
 	// measConfig params without OPTIONAL
 	Value speedStatePars_ptr(kObjectType);
@@ -123,7 +124,7 @@ void ICSA::mc_deserialize(Value::ConstObject& icsa)
 	}
 }
 
-void ICSA::ssp_serialize(Value& speedStatePars_ptr, Document::AllocatorType& allocator)
+void ICSA::ssp_serialize(Value& speedStatePars_ptr, Document::AllocatorType& allocator) const 
 {
 	// speedStatePars_ptr prams
 	auto ssp = message.measConfig->speedStatePars;
@@ -170,7 +171,7 @@ void ICSA::ssp_serialize(Value& speedStatePars_ptr, Document::AllocatorType& all
 
 		// _asn_ctx params
 		asn_ctx_serialize(_asn_ctx_s, mc_ssp_s._asn_ctx, allocator);
-		mobilityStateParameters.AddMember("_asn_ctx", _asn_ctx_s, allocator);
+		//mobilityStateParameters.AddMember("_asn_ctx", _asn_ctx_s, allocator);
 
 
 		setup.AddMember("mobilityStateParameters", mobilityStateParameters, allocator);
@@ -238,6 +239,8 @@ void ICSA::ssp_deserialize(MeasConfig& measConfig, Value::ConstObject& obj_mc)
 
 		auto asn_ctx = obj_ssp["_asn_ctx"].GetObj();
 		asn_ctx_deserialize(ssp._asn_ctx, asn_ctx);
+
+		measConfig.speedStatePars = new MeasConfig::MeasConfig__speedStatePars(ssp);
 	}
 	else
 	{
@@ -245,7 +248,7 @@ void ICSA::ssp_deserialize(MeasConfig& measConfig, Value::ConstObject& obj_mc)
 	}
 }
 
-void ICSA::msf_serialize(Value& measScaleFactor_r12_ptr, Document::AllocatorType& allocator)
+void ICSA::msf_serialize(Value& measScaleFactor_r12_ptr, Document::AllocatorType& allocator) const 
 {
 	// measScaleFactor_r12_ptr prams
 	auto msf = message.measConfig->measScaleFactor_r12;
@@ -288,6 +291,8 @@ void ICSA::msf_deserialize(MeasConfig& measConfig, Value::ConstObject& obj_mc)
 
 		auto asn_ctx = obj_msf["_asn_ctx"].GetObj();
 		asn_ctx_deserialize(msf._asn_ctx, asn_ctx);
+
+		measConfig.measScaleFactor_r12 = new MeasConfig::MeasConfig__measScaleFactor_r12(msf);
 	}
 	else
 	{
@@ -295,7 +300,7 @@ void ICSA::msf_deserialize(MeasConfig& measConfig, Value::ConstObject& obj_mc)
 	}
 }
 
-void ICSA::cdrxc_serialize(Value& cdrxConfig, Document::AllocatorType& allocator)
+void ICSA::cdrxc_serialize(Value& cdrxConfig, Document::AllocatorType& allocator) const 
 {
 	Value choice(kObjectType);
 	cdrxConfig.AddMember("present", static_cast<unsigned>(message.cdrxConfig->present), allocator);
@@ -334,7 +339,7 @@ void ICSA::cdrxc_serialize(Value& cdrxConfig, Document::AllocatorType& allocator
 
 		Value _asn_ctx_sdrx(kObjectType);
 		asn_ctx_serialize(_asn_ctx_sdrx, cdrxc_s.shortDRX->_asn_ctx, allocator);
-		longDRX_CycleStartOffset.AddMember("_asn_ctx", _asn_ctx_sdrx, allocator);
+		shortDRX.AddMember("_asn_ctx", _asn_ctx_sdrx, allocator);
 
 		setup.AddMember("shortDRX", shortDRX, allocator);
 
@@ -387,7 +392,7 @@ void ICSA::cdrxc_deserialize(Value::ConstObject& icsa)
 				auto asn_ctx = obj_shortdrx["_asn_ctx"].GetObj();
 				asn_ctx_deserialize(shortdrx._asn_ctx, asn_ctx);
 
-				setup.shortDRX = &shortdrx;
+				setup.shortDRX = new DRX_Config::DRX_Config_u::DRX_Config__setup::DRX_Config__setup__shortDRX(shortdrx);
 			}
 			else
 			{
@@ -401,7 +406,7 @@ void ICSA::cdrxc_deserialize(Value::ConstObject& icsa)
 		auto asn_ctx = obj_cdrxc["_asn_ctx"].GetObj();
 		asn_ctx_deserialize(cdrxConfig._asn_ctx, asn_ctx);
 
-		message.cdrxConfig = &cdrxConfig;
+		message.cdrxConfig = new DRX_Config(cdrxConfig);
 	}
 	else
 	{
@@ -409,7 +414,7 @@ void ICSA::cdrxc_deserialize(Value::ConstObject& icsa)
 	}
 }
 
-void ICSA::ldrx_serialize(Value& longDRX_CycleStartOffset, DRX_Config__setup__longDRX_CycleStartOffset_PR present, Document::AllocatorType& allocator)
+void ICSA::ldrx_serialize(Value& longDRX_CycleStartOffset, DRX_Config__setup__longDRX_CycleStartOffset_PR present, Document::AllocatorType& allocator) const 
 {
 	auto ch = message.cdrxConfig->choice.setup.longDRX_CycleStartOffset.choice;
 
@@ -530,4 +535,86 @@ void ICSA::ldrx_deserialize(DRX_Config::DRX_Config_u::DRX_Config__setup& setup, 
 	
 	auto asn_ctx = obj_longdrx["_asn_ctx"].GetObj();
 	asn_ctx_deserialize(setup.longDRX_CycleStartOffset._asn_ctx, asn_ctx);
+}
+
+
+std::unique_ptr<ICSA> GetFilledICSA()
+{
+	asn_struct_ctx_t asn_ctx;
+	asn_ctx.phase = SHRT_MAX;
+	asn_ctx.step = SHRT_MIN;
+	asn_ctx.context = INT_MAX;
+	asn_ctx.ptr = nullptr;
+	asn_ctx.left = 5;
+
+	InitialContextSetupAcknowledgement message;
+	message.is_accepted = true;
+
+	MeasConfig mc;
+	
+
+	MeasConfig::MeasConfig__speedStatePars ssp;
+
+	ssp.present = MeasConfig__speedStatePars_PR_setup;
+
+	ssp.choice.setup.mobilityStateParameters.t_Evaluation = LONG_MAX;
+	ssp.choice.setup.mobilityStateParameters.t_HystNormal = LONG_MIN;
+	ssp.choice.setup.mobilityStateParameters.n_CellChangeMedium = LONG_MAX;
+	ssp.choice.setup.mobilityStateParameters.n_CellChangeHigh = LONG_MIN;
+	ssp.choice.setup.mobilityStateParameters._asn_ctx = asn_ctx;
+
+	ssp.choice.setup.timeToTrigger_SF.sf_Medium = LONG_MAX;
+	ssp.choice.setup.timeToTrigger_SF.sf_High = LONG_MIN;
+	ssp.choice.setup.timeToTrigger_SF._asn_ctx = asn_ctx;
+
+	ssp.choice.setup._asn_ctx = asn_ctx;
+
+	mc.speedStatePars = new MeasConfig::MeasConfig__speedStatePars(ssp);
+	
+
+	MeasConfig::MeasConfig__measScaleFactor_r12 msf;
+
+	msf.present = MeasConfig__measScaleFactor_r12_PR_release;
+
+	msf.choice.release = 1;
+	msf._asn_ctx = asn_ctx;
+
+	mc.measScaleFactor_r12 = new MeasConfig::MeasConfig__measScaleFactor_r12(msf);
+
+
+	mc._asn_ctx = asn_ctx;
+
+
+	message.measConfig = new MeasConfig(mc);
+
+
+
+	DRX_Config cdrx;
+
+	cdrx.present = DRX_Config_PR_setup;
+
+	cdrx.choice.setup.onDurationTimer = LONG_MAX;
+	cdrx.choice.setup.drx_InactivityTimer = LONG_MIN;
+	cdrx.choice.setup.drx_RetransmissionTimer = LONG_MAX;
+
+	cdrx.choice.setup.longDRX_CycleStartOffset.present = DRX_Config__setup__longDRX_CycleStartOffset_PR_sf64;
+	cdrx.choice.setup.longDRX_CycleStartOffset.choice.sf64 = 228;
+	cdrx.choice.setup.longDRX_CycleStartOffset._asn_ctx = asn_ctx;
+
+	DRX_Config_t::DRX_Config_u::DRX_Config__setup::DRX_Config__setup__shortDRX sdrx;
+
+	sdrx.shortDRX_Cycle = LONG_MAX;
+	sdrx.drxShortCycleTimer = LONG_MIN;
+	sdrx._asn_ctx = asn_ctx;
+
+	cdrx.choice.setup.shortDRX = new DRX_Config_t::DRX_Config_u::DRX_Config__setup::DRX_Config__setup__shortDRX(sdrx);
+
+
+	cdrx.choice.setup._asn_ctx = asn_ctx;
+
+	cdrx._asn_ctx = asn_ctx;
+
+	message.cdrxConfig = new DRX_Config(cdrx);
+
+	return std::make_unique<ICSA>(message);
 }
