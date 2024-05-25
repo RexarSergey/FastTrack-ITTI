@@ -224,6 +224,71 @@ void deserializeRedirectedCarrierInfo(const Value& json, RedirectedCarrierInfo_t
     }
 }
 
+void serializeRrcCause(const vran::cplane::common::RrcCause& rrcCause, StringBuffer& buffer) {
+    Writer<StringBuffer> writer(buffer);
+    writer.StartObject();
+
+    switch (rrcCause) {
+    case vran::cplane::common::RrcCause::CAUSE_NOTHING:
+        writer.Key("cause");
+        writer.String("CAUSE_NOTHING");
+        break;
+    case vran::cplane::common::RrcCause::CAUSE_RADIO_NETWORK:
+        writer.Key("cause");
+        writer.String("CAUSE_RADIO_NETWORK");
+        break;
+    case vran::cplane::common::RrcCause::CAUSE_TRANSPORT:
+        writer.Key("cause");
+        writer.String("CAUSE_TRANSPORT");
+        break;
+    case vran::cplane::common::RrcCause::CAUSE_NAS:
+        writer.Key("cause");
+        writer.String("CAUSE_NAS");
+        break;
+    case vran::cplane::common::RrcCause::CAUSE_PROTOCOL:
+        writer.Key("cause");
+        writer.String("CAUSE_PROTOCOL");
+        break;
+    case vran::cplane::common::RrcCause::CAUSE_MISC:
+        writer.Key("cause");
+        writer.String("CAUSE_MISC");
+        break;
+    case vran::cplane::common::RrcCause::CAUSE_EXTENTION:
+        writer.Key("cause");
+        writer.String("CAUSE_EXTENTION");
+        break;
+    }
+
+    writer.EndObject();
+}
+
+void deserializeRrcCause(const Value& json, vran::cplane::common::RrcCause& rrcCause) {
+    if (json.HasMember("cause") && json["cause"].IsString()) {
+        const char* causeStr = json["cause"].GetString();
+        if (strcmp(causeStr, "CAUSE_NOTHING") == 0) {
+            rrcCause = vran::cplane::common::RrcCause::CAUSE_NOTHING;
+        }
+        else if (strcmp(causeStr, "CAUSE_RADIO_NETWORK") == 0) {
+            rrcCause = vran::cplane::common::RrcCause::CAUSE_RADIO_NETWORK;
+        }
+        else if (strcmp(causeStr, "CAUSE_TRANSPORT") == 0) {
+            rrcCause = vran::cplane::common::RrcCause::CAUSE_TRANSPORT;
+        }
+        else if (strcmp(causeStr, "CAUSE_NAS") == 0) {
+            rrcCause = vran::cplane::common::RrcCause::CAUSE_NAS;
+        }
+        else if (strcmp(causeStr, "CAUSE_PROTOCOL") == 0) {
+            rrcCause = vran::cplane::common::RrcCause::CAUSE_PROTOCOL;
+        }
+        else if (strcmp(causeStr, "CAUSE_MISC") == 0) {
+            rrcCause = vran::cplane::common::RrcCause::CAUSE_MISC;
+        }
+        else if (strcmp(causeStr, "CAUSE_EXTENTION") == 0) {
+            rrcCause = vran::cplane::common::RrcCause::CAUSE_EXTENTION;
+        }
+    }
+}
+
 void serializeAdmUeReleaseRequest(const AdmUeReleaseRequest& request, StringBuffer& buffer) {
     Writer<StringBuffer> writer(buffer);
 
