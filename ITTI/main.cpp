@@ -1,10 +1,12 @@
 // The file was executed by Mikhail Kozlov
 
+
 #include "DAI.h"
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/writer.h"
 #include "PSR.h"
+#include "ICSA/ICSA.h"
 
 #include <deque>
 #include <fstream>
@@ -52,6 +54,9 @@ void AddToMessageDeque(const std::vector<rapidjson::Document>& documents) {
         else if (documents[id].HasMember("path_switch_request")) {
             mes = std::make_unique<PSR>();
         }
+        else if (documents[id].HasMember("InitialContextSetupAcknowledgement")) {
+            mes = std::make_unique<ICSA>();
+        }
         else {
             throw std::invalid_argument("Unknown structure name");
         }
@@ -93,6 +98,8 @@ int main(){
     int structures_count = 0;
     CreateJson(GetFilledDai(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledPsr(), std::to_string(structures_count++) + "_original.json");
+    CreateJson(GetFilledICSA(), std::to_string(structures_count++) + "_original.json");
+
 
     std::vector<rapidjson::Document> documents;
     documents.reserve(structures_count);

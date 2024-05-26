@@ -19,6 +19,8 @@ struct ICSA : public StructureInterface
 	void serialize(Document& config) const override;
 	void deserialize(const Document& config) override;
 
+	void print_json();
+
 private:
 	void asn_ctx_serialize(Value& _asn_ctx, asn_struct_ctx_t& root, Document::AllocatorType& allocator) const;
 	void asn_ctx_deserialize(asn_struct_ctx_t& asn_ctx, Value::ConstObject& obj);

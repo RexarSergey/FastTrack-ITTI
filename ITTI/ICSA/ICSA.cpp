@@ -1,4 +1,6 @@
 #include "ICSA.h"
+#include "prettywriter.h"
+
 #include <limits>
 
 void ICSA::serialize(Document& config) const
@@ -49,6 +51,17 @@ void ICSA::deserialize(const Document& config)
 
 	mc_deserialize(icsa);
 	cdrxc_deserialize(icsa);
+}
+
+void ICSA::print_json()
+{
+	Document document;
+	this->serialize(document);
+
+	StringBuffer sb;
+	PrettyWriter<StringBuffer> writer(sb);
+	document.Accept(writer);
+	puts(sb.GetString());
 }
 
 void ICSA::asn_ctx_serialize(Value& _asn_ctx, asn_struct_ctx_t& root, Document::AllocatorType& allocator) const 
@@ -116,7 +129,7 @@ void ICSA::mc_deserialize(Value::ConstObject& icsa)
 		auto asn_ctx = obj_mc["_asn_ctx"].GetObj();
 		asn_ctx_deserialize(measConfig._asn_ctx, asn_ctx);
 
-		message.measConfig = &measConfig;
+		message.measConfig = new MeasConfig(measConfig);
 	}
 	else
 	{
@@ -401,6 +414,8 @@ void ICSA::cdrxc_deserialize(Value::ConstObject& icsa)
 
 			auto asn_ctx = obj_choice_setup["_asn_ctx"].GetObj();
 			asn_ctx_deserialize(setup._asn_ctx, asn_ctx);
+
+			cdrxConfig.choice.setup = setup;
 		}
 
 		auto asn_ctx = obj_cdrxc["_asn_ctx"].GetObj();
