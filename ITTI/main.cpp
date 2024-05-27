@@ -1,6 +1,5 @@
 // The file was executed by Mikhail Kozlov
 
-
 #include "DAI.h"
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
@@ -25,17 +24,26 @@ std::condition_variable deque_cv;
 std::deque<std::unique_ptr<StructureInterface>> message_deque;
 
 void CreateJson(std::unique_ptr<StructureInterface> message, std::string file_name){
+    if (!message) {
+        throw std::invalid_argument("Nullptr was passed");
+    }
     rapidjson::Document doc;
     message->serialize(doc);
     rapidjson::StringBuffer buf;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buf);
     doc.Accept(writer);
     std::ofstream output(file_name);
+    if (!output) {
+        throw std::runtime_error("Can't open output file: " + file_name);
+    }
     output << buf.GetString();
 }
 
 rapidjson::Document ReadJson(const std::string& file_name) {
     std::ifstream file(file_name);
+    if (!file) {
+        throw std::runtime_error("Can't open input file: " + file_name);
+    }
     std::stringstream buffer;
     buffer << file.rdbuf();
     std::string content = buffer.str();
@@ -81,7 +89,13 @@ void Worker() {
         CreateJson(std::move(mes), id + "_final.json");
 
         std::ifstream original(id + "_original.json", std::ios::binary);
+        if (!original) {
+            throw std::runtime_error("Can't open input file: " + id + "_original.json");
+        }
         std::ifstream final(id + "_final.json", std::ios::binary);
+        if (!final) {
+            throw std::runtime_error("Can't open input file: " + id + "_final.json");
+        }
 
         if (std::equal(std::istreambuf_iterator<char>(original.rdbuf()),
             std::istreambuf_iterator<char>(),
@@ -99,7 +113,6 @@ int main(){
     CreateJson(GetFilledDai(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledPsr(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledICSA(), std::to_string(structures_count++) + "_original.json");
-
 
     std::vector<rapidjson::Document> documents;
     documents.reserve(structures_count);
