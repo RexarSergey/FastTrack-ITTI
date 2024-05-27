@@ -1,3 +1,4 @@
+// Pudovkin Dmitriy
 #include "AURR.h"
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
