@@ -1,5 +1,6 @@
 // Pudovkin Dmitriy
 #include "AURR.h"
+#include <iostream>
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
@@ -63,8 +64,18 @@ void deserializeCarrierFreqsGERAN(const Value& doc, CarrierFreqsGERAN_t* carrier
         const Value& explicitListOfARFCNs = followingARFCNs["explicitListOfARFCNs"];
         carrierFreqs->followingARFCNs.choice.explicitListOfARFCNs.list.count = explicitListOfARFCNs.Size();
         carrierFreqs->followingARFCNs.choice.explicitListOfARFCNs.list.array = (ARFCN_ValueGERAN_t**)calloc(explicitListOfARFCNs.Size(), sizeof(ARFCN_ValueGERAN_t*));
+
+        if (carrierFreqs->followingARFCNs.choice.explicitListOfARFCNs.list.array == nullptr) {
+            std::cerr << "Memory allocation failed for explicitListOfARFCNs.list.array" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+
         for (SizeType i = 0; i < explicitListOfARFCNs.Size(); i++) {
             carrierFreqs->followingARFCNs.choice.explicitListOfARFCNs.list.array[i] = (ARFCN_ValueGERAN_t*)calloc(1, sizeof(ARFCN_ValueGERAN_t));
+            if (carrierFreqs->followingARFCNs.choice.explicitListOfARFCNs.list.array[i] == nullptr) {
+                std::cerr << "Memory allocation failed for explicitListOfARFCNs.list.array[" << i << "]" << std::endl;
+                exit(EXIT_FAILURE);
+            }
             *(carrierFreqs->followingARFCNs.choice.explicitListOfARFCNs.list.array[i]) = explicitListOfARFCNs[i].GetUint();
         }
         break;
@@ -79,6 +90,12 @@ void deserializeCarrierFreqsGERAN(const Value& doc, CarrierFreqsGERAN_t* carrier
         const Value& variableBitMapOfARFCNs = followingARFCNs["variableBitMapOfARFCNs"];
         carrierFreqs->followingARFCNs.choice.variableBitMapOfARFCNs.size = variableBitMapOfARFCNs.GetStringLength();
         carrierFreqs->followingARFCNs.choice.variableBitMapOfARFCNs.buf = (uint8_t*)calloc(variableBitMapOfARFCNs.GetStringLength(), sizeof(uint8_t));
+
+        if (carrierFreqs->followingARFCNs.choice.variableBitMapOfARFCNs.buf == nullptr) {
+            std::cerr << "Memory allocation failed for variableBitMapOfARFCNs.buf" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+
         memcpy(carrierFreqs->followingARFCNs.choice.variableBitMapOfARFCNs.buf, variableBitMapOfARFCNs.GetString(), variableBitMapOfARFCNs.GetStringLength());
         break;
     }
@@ -120,8 +137,18 @@ void deserializeCarrierFreqListUTRA_TDD_r10(const Value& json, CarrierFreqListUT
     const Value& list = json;
     carrierFreqList->list.count = list.Size();
     carrierFreqList->list.array = (ARFCN_ValueUTRA_t**)calloc(list.Size(), sizeof(ARFCN_ValueUTRA_t*));
+
+    if (carrierFreqList->list.array == nullptr) {
+        std::cerr << "Memory allocation failed for carrierFreqList->list.array" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     for (SizeType i = 0; i < list.Size(); i++) {
         carrierFreqList->list.array[i] = (ARFCN_ValueUTRA_t*)calloc(1, sizeof(ARFCN_ValueUTRA_t));
+        if (carrierFreqList->list.array[i] == nullptr) {
+            std::cerr << "Memory allocation failed for carrierFreqList->list.array[" << i << "]" << std::endl;
+            exit(EXIT_FAILURE);
+        }
         *carrierFreqList->list.array[i] = static_cast<ARFCN_ValueUTRA_t>(list[i].GetUint());
     }
 }
@@ -281,7 +308,7 @@ void serializeAdmUeReleaseRequest(const AdmUeReleaseRequest& request, StringBuff
     Writer<StringBuffer> writer(buffer);
     writer.StartObject();
 
-    writer.Key("AdmUeReleaseRequest"); // Добавляем имя структуры
+    writer.Key("AdmUeReleaseRequest");
     writer.StartObject();
 
     writer.Key("cause");
@@ -306,6 +333,12 @@ void deserializeAdmUeReleaseRequest(const Value& json, AdmUeReleaseRequest& requ
 
         if (admUeReleaseRequest.HasMember("redirectedCarrierInfo") && admUeReleaseRequest["redirectedCarrierInfo"].IsObject()) {
             request.redirectedCarrierInfo = (RedirectedCarrierInfo_t*)calloc(1, sizeof(RedirectedCarrierInfo_t));
+
+            if (request.redirectedCarrierInfo == nullptr) {
+                std::cerr << "Memory allocation failed for redirectedCarrierInfo" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+
             deserializeRedirectedCarrierInfo(admUeReleaseRequest["redirectedCarrierInfo"], *request.redirectedCarrierInfo);
         }
         else {
@@ -333,6 +366,12 @@ std::unique_ptr<AURR> GetFilledAurr() {
     message.cause = RrcCause::CAUSE_NAS;
 
     message.redirectedCarrierInfo = (RedirectedCarrierInfo_t*)calloc(1, sizeof(RedirectedCarrierInfo_t));
+
+    if (message.redirectedCarrierInfo == nullptr) {
+        std::cerr << "Memory allocation failed for redirectedCarrierInfo" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     message.redirectedCarrierInfo->present = RedirectedCarrierInfo_PR_geran;
 
     CarrierFreqsGERAN_t& targetGeran = message.redirectedCarrierInfo->choice.geran;
@@ -343,8 +382,18 @@ std::unique_ptr<AURR> GetFilledAurr() {
 
     targetGeran.followingARFCNs.choice.explicitListOfARFCNs.list.count = 3;
     targetGeran.followingARFCNs.choice.explicitListOfARFCNs.list.array = (ARFCN_ValueGERAN_t**)calloc(3, sizeof(ARFCN_ValueGERAN_t*));
+
+    if (targetGeran.followingARFCNs.choice.explicitListOfARFCNs.list.array == nullptr) {
+        std::cerr << "Memory allocation failed for targetGeran.followingARFCNs.choice.explicitListOfARFCNs.list.array" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     for (size_t i = 0; i < 3; i++) {
         targetGeran.followingARFCNs.choice.explicitListOfARFCNs.list.array[i] = (ARFCN_ValueGERAN_t*)calloc(1, sizeof(ARFCN_ValueGERAN_t));
+        if (targetGeran.followingARFCNs.choice.explicitListOfARFCNs.list.array[i] == nullptr) {
+            std::cerr << "Memory allocation failed for targetGeran.followingARFCNs.choice.explicitListOfARFCNs.list.array[" << i << "]" << std::endl;
+            exit(EXIT_FAILURE);
+        }
     }
 
     *(targetGeran.followingARFCNs.choice.explicitListOfARFCNs.list.array[0]) = 129;
