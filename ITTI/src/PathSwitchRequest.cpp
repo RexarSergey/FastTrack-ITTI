@@ -1,15 +1,15 @@
 // Korsakova Yulia
 
-#include "PSR.h"
+#include "include/PathSwitchRequest.h"
 #include "rapidjson/document.h"
 #include <stdexcept>
 
-PSR::PSR(const vran::s1ap::lte::PathSwitchRequest& message)
+PathSwitchRequest_Handler::PathSwitchRequest_Handler(const vran::s1ap::lte::PathSwitchRequest& message)
     :message_(message)
 {
 }
 
-void PSR::serialize(rapidjson::Document& config) const {
+void PathSwitchRequest_Handler::serialize(rapidjson::Document& config) const {
     rapidjson::Document::AllocatorType& allocator = config.GetAllocator();
 
     rapidjson::Value path_switch_request_object(rapidjson::kObjectType);
@@ -45,7 +45,7 @@ void PSR::serialize(rapidjson::Document& config) const {
     config.AddMember("path_switch_request", path_switch_request_object, allocator);
 }
 
-void PSR::deserialize(const rapidjson::Document& config) {
+void PathSwitchRequest_Handler::deserialize(const rapidjson::Document& config) {
     if (config.HasMember("path_switch_request") && config["path_switch_request"].IsObject()) {
 
         const rapidjson::Value& path_switch_request_object = config["path_switch_request"];
@@ -109,7 +109,7 @@ void PSR::deserialize(const rapidjson::Document& config) {
     }
 }
 
-std::unique_ptr<PSR> GetFilledPsr() {
+std::unique_ptr<PSR> GetFilledPathSwitchRequest_Handler() {
     using namespace vran::cplane::common;
     vran::s1ap::lte::PathSwitchRequest message;
     message.cp_ue_id = 1234;

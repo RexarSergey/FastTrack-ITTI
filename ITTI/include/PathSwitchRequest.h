@@ -5,7 +5,7 @@
 #include "structure_interface.h"
 
 
-class PSR: public StructureInterface {
+class PathSwitchRequest_Handler: public StructureInterface {
 public:
     PSR() = default;
     PSR(const vran::s1ap::lte::PathSwitchRequest& message);
@@ -17,4 +17,4 @@ private:
     vran::s1ap::lte::PathSwitchRequest message_;
 };
 
-std::unique_ptr<PSR> GetFilledPsr();
+std::unique_ptr<PSR> GetFilledPathSwitchRequest_Handler();

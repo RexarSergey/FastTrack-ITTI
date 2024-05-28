@@ -3,7 +3,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/writer.h"
-#include "PSR.h"
+#include "include/PathSwitchRequest.h"
 #include "include/InitialContextSetupAcknowledgement.h"
 
 #include <deque>
@@ -203,7 +203,7 @@ int main() {
 
         int structures_count = 0;
         CreateJson(GetFilledDrbAdditionalInfo_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
-        CreateJson(GetFilledPsr(), "Received/" + std::to_string(structures_count++) + ".json");
+        CreateJson(GetFilledPathSwitchRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledICSA(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledAdmUeReleaseRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
 
