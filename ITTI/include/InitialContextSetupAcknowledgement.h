@@ -5,7 +5,7 @@
 #include <document.h>
 #include <types.hpp>
 
-#include "../structure_interface.h"
+#include "structure_interface.h"
 
 using namespace rapidjson;
 using namespace vran::rrc_cu::lte;
