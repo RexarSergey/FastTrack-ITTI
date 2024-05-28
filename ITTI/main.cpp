@@ -64,7 +64,7 @@ void AddToMessageDeque(const std::vector<rapidjson::Document>& documents) {
             mes = std::make_unique<PSR>();
         }
         else if (documents[id].HasMember("InitialContextSetupAcknowledgement")) {
-            mes = std::make_unique<ICSA>();
+            mes = std::make_unique<InitialContextSetupAcknowledgement_Handler>();
         }
         else if (documents[id].HasMember("AdmUeReleaseRequest")) {
             mes = std::make_unique<AURR>();

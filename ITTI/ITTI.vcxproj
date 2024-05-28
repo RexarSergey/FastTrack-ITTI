@@ -146,13 +146,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DAI.cpp" />
-    <ClCompile Include="ICSA\ICSA.cpp" />
+    <ClCompile Include="ICSA\InitialContextSetupAcknowledgement_Handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PSR.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DAI.h" />
-    <ClInclude Include="ICSA\ICSA.h" />
+    <ClInclude Include="ICSA\InitialContextSetupAcknowledgement_Handler.h" />
     <ClInclude Include="ICSR.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
