@@ -205,7 +205,7 @@ int main() {
         CreateJson(GetFilledDrbAdditionalInfo_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledPsr(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledICSA(), "Received/" + std::to_string(structures_count++) + ".json");
-        CreateJson(GetFilledAurr(), "Received/" + std::to_string(structures_count++) + ".json");
+        CreateJson( GetFilledAdmUeReleaseRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
 
         std::vector<rapidjson::Document> documents;
         documents.reserve(structures_count);
