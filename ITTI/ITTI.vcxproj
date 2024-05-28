@@ -145,13 +145,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DAI.cpp" />
+    <ClCompile Include="src\DrbAdditionalInfo_Handler.cpp" />
     <ClCompile Include="ICSA\InitialContextSetupAcknowledgement_Handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PSR.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DAI.h" />
+    <ClInclude Include="include\DrbAdditionalInfo_Handler.h" />
     <ClInclude Include="ICSA\InitialContextSetupAcknowledgement_Handler.h" />
     <ClInclude Include="ICSR.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -203,7 +203,7 @@
     <ClInclude Include="rapidjson\stringbuffer.h" />
     <ClInclude Include="rapidjson\uri.h" />
     <ClInclude Include="rapidjson\writer.h" />
-    <ClInclude Include="structure_interface.h" />
+    <ClInclude Include="include\structure_interface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,10 +7,10 @@
 
 #include <memory>
 
-class DAI: public StructureInterface{
+class DrbAdditionalInfo_Handler: public StructureInterface{
 public:
-    DAI() = default;
-    DAI(const vran::rrc_du::DrbAdditionalInfo& message);
+    DrbAdditionalInfo_Handler() = default;
+    DrbAdditionalInfo_Handler(const vran::rrc_du::DrbAdditionalInfo& message);
 
     void serialize(rapidjson::Document& config) const override;
     void deserialize(const rapidjson::Document &config) override;
@@ -19,4 +19,4 @@ private:
     vran::rrc_du::DrbAdditionalInfo message_;
 };
 
-std::unique_ptr<DAI> GetFilledDai();
+std::unique_ptr<DrbAdditionalInfo_Handler> GetFilledDrbAdditionalInfo_Handler();

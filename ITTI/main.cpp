@@ -1,7 +1,7 @@
 // The file was executed by Mikhail Kozlov
 
 #include "AURR.h"
-#include "DAI.h"
+#include "include/DrbAdditionalInfo_Handler.h"
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/writer.h"
@@ -58,7 +58,7 @@ void AddToMessageDeque(const std::vector<rapidjson::Document>& documents) {
     for (int id = 0; id < documents.size(); ++id) {
         std::unique_ptr<StructureInterface> mes;
         if (documents[id].HasMember("drb_additional_info")) {
-            mes = std::make_unique<DAI>();
+            mes = std::make_unique<DrbAdditionalInfo_Handler>();
         }
         else if (documents[id].HasMember("path_switch_request")) {
             mes = std::make_unique<PSR>();
@@ -114,7 +114,7 @@ void Worker() {
 
 int main(){
     int structures_count = 0;
-    CreateJson(GetFilledDai(), std::to_string(structures_count++) + "_original.json");
+    CreateJson(GetFilledDrbAdditionalInfo_Handler(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledPsr(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledICSA(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledAurr(), std::to_string(structures_count++) + "_original.json");

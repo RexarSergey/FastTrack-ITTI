@@ -1,5 +1,5 @@
 #include "AURR.h"
-#include "DAI.h"
+#include "include/DrbAdditionalInfo_Handler.h"
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/writer.h"
@@ -202,7 +202,7 @@ int main() {
         InitializeWinsock();
 
         int structures_count = 0;
-        CreateJson(GetFilledDai(), "Received/" + std::to_string(structures_count++) + ".json");
+        CreateJson(GetFilledDrbAdditionalInfo_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledPsr(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledICSA(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledAurr(), "Received/" + std::to_string(structures_count++) + ".json");

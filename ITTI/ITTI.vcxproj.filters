@@ -18,13 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DAI.cpp">
+    <ClCompile Include="src\DrbAdditionalInfo_Handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PSR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ICSA\ICSA.cpp">
+    <ClCompile Include="ICSA\InitialContextSetupAcknowledgement_Handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,13 +149,13 @@
     <ClInclude Include="ICSR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DAI.h">
+    <ClInclude Include="include\DrbAdditionalInfo_Handler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="structure_interface.h">
+    <ClInclude Include="include\structure_interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ICSA\ICSA.h">
+    <ClInclude Include="ICSA\InitialContextSetupAcknowledgement_Handler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

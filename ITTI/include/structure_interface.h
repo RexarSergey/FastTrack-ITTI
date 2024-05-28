@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rapidjson\document.h"
+#include <document.h>
 
 class StructureInterface {
 public:

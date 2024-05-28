@@ -1,14 +1,13 @@
 // The file was executed by Mikhail Kozlov
 
-#include "DAI.h"
-#include "rapidjson/document.h"
+#include "../include/DrbAdditionalInfo_Handler.h"
 
-DAI::DAI(const vran::rrc_du::DrbAdditionalInfo& message)
+DrbAdditionalInfo_Handler::DrbAdditionalInfo_Handler(const vran::rrc_du::DrbAdditionalInfo& message)
     :message_(message)
 {
 }
 
-void DAI::serialize(rapidjson::Document& config) const {
+void DrbAdditionalInfo_Handler::serialize(rapidjson::Document& config) const {
     rapidjson::Document::AllocatorType& allocator = config.GetAllocator();
 
 
@@ -54,7 +53,7 @@ void DAI::serialize(rapidjson::Document& config) const {
     config.AddMember("drb_additional_info", drb_additional_info_object, allocator);
 }
 
-void DAI::deserialize(const rapidjson::Document& config) {
+void DrbAdditionalInfo_Handler::deserialize(const rapidjson::Document& config) {
     if (config.HasMember("drb_additional_info") && config["drb_additional_info"].IsObject()) {
         const rapidjson::Value& drb_additional_info_object = config["drb_additional_info"];
 
@@ -152,7 +151,7 @@ void DAI::deserialize(const rapidjson::Document& config) {
     }
 }
 
-std::unique_ptr<DAI> GetFilledDai() {
+std::unique_ptr<DrbAdditionalInfo_Handler> GetFilledDrbAdditionalInfo_Handler() {
     using namespace vran::cplane::common;
     vran::rrc_du::DrbAdditionalInfo message;
     message.drb_id = 23u;
@@ -177,5 +176,5 @@ std::unique_ptr<DAI> GetFilledDai() {
     }
     message.param_gtp_cu.teid = 32u;
 
-    return std::make_unique<DAI>(message);
+    return std::make_unique<DrbAdditionalInfo_Handler>(message);
 }
