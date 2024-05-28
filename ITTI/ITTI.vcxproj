@@ -145,13 +145,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\DrbAdditionalInfo_Handler.cpp" />
+    <ClCompile Include="src\DrbAdditionalInfo.cpp" />
     <ClCompile Include="ICSA\InitialContextSetupAcknowledgement_Handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PSR.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\DrbAdditionalInfo_Handler.h" />
+    <ClInclude Include="include\DrbAdditionalInfo.h" />
     <ClInclude Include="ICSA\InitialContextSetupAcknowledgement_Handler.h" />
     <ClInclude Include="ICSR.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

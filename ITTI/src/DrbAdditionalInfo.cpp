@@ -1,6 +1,6 @@
 // The file was executed by Mikhail Kozlov
 
-#include "../include/DrbAdditionalInfo_Handler.h"
+#include "../include/DrbAdditionalInfo.h"
 
 DrbAdditionalInfo_Handler::DrbAdditionalInfo_Handler(const vran::rrc_du::DrbAdditionalInfo& message)
     :message_(message)

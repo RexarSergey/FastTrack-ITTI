@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DrbAdditionalInfo_Handler.cpp">
+    <ClCompile Include="src\DrbAdditionalInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PSR.cpp">
@@ -149,7 +149,7 @@
     <ClInclude Include="ICSR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\DrbAdditionalInfo_Handler.h">
+    <ClInclude Include="include\DrbAdditionalInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\structure_interface.h">

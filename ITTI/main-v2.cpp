@@ -1,5 +1,5 @@
 #include "AURR.h"
-#include "include/DrbAdditionalInfo_Handler.h"
+#include "include/DrbAdditionalInfo.h"
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/writer.h"
