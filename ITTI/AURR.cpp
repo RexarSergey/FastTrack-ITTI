@@ -281,6 +281,9 @@ void serializeAdmUeReleaseRequest(const AdmUeReleaseRequest& request, StringBuff
     Writer<StringBuffer> writer(buffer);
     writer.StartObject();
 
+    writer.Key("AdmUeReleaseRequest"); // Добавляем имя структуры
+    writer.StartObject();
+
     writer.Key("cause");
     serializeRrcCause(request.cause, writer);
 
@@ -290,19 +293,24 @@ void serializeAdmUeReleaseRequest(const AdmUeReleaseRequest& request, StringBuff
     }
 
     writer.EndObject();
+    writer.EndObject();
 }
 
 void deserializeAdmUeReleaseRequest(const Value& json, AdmUeReleaseRequest& request) {
-    if (json.HasMember("cause") && json["cause"].IsObject()) {
-        deserializeRrcCause(json["cause"], request.cause);
-    }
+    if (json.HasMember("AdmUeReleaseRequest") && json["AdmUeReleaseRequest"].IsObject()) {
+        const Value& admUeReleaseRequest = json["AdmUeReleaseRequest"];
 
-    if (json.HasMember("redirectedCarrierInfo") && json["redirectedCarrierInfo"].IsObject()) {
-        request.redirectedCarrierInfo = (RedirectedCarrierInfo_t*)calloc(1, sizeof(RedirectedCarrierInfo_t));
-        deserializeRedirectedCarrierInfo(json["redirectedCarrierInfo"], *request.redirectedCarrierInfo);
-    }
-    else {
-        request.redirectedCarrierInfo = nullptr;
+        if (admUeReleaseRequest.HasMember("cause") && admUeReleaseRequest["cause"].IsObject()) {
+            deserializeRrcCause(admUeReleaseRequest["cause"], request.cause);
+        }
+
+        if (admUeReleaseRequest.HasMember("redirectedCarrierInfo") && admUeReleaseRequest["redirectedCarrierInfo"].IsObject()) {
+            request.redirectedCarrierInfo = (RedirectedCarrierInfo_t*)calloc(1, sizeof(RedirectedCarrierInfo_t));
+            deserializeRedirectedCarrierInfo(admUeReleaseRequest["redirectedCarrierInfo"], *request.redirectedCarrierInfo);
+        }
+        else {
+            request.redirectedCarrierInfo = nullptr;
+        }
     }
 }
 
