@@ -1,5 +1,6 @@
 // The file was executed by Mikhail Kozlov
 
+#include "AURR.h"
 #include "DAI.h"
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
@@ -65,6 +66,9 @@ void AddToMessageDeque(const std::vector<rapidjson::Document>& documents) {
         else if (documents[id].HasMember("InitialContextSetupAcknowledgement")) {
             mes = std::make_unique<ICSA>();
         }
+        else if (documents[id].HasMember("AdmUeReleaseRequest")) {
+            mes = std::make_unique<AURR>();
+        }
         else {
             throw std::invalid_argument("Unknown structure name");
         }
@@ -113,6 +117,7 @@ int main(){
     CreateJson(GetFilledDai(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledPsr(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledICSA(), std::to_string(structures_count++) + "_original.json");
+    CreateJson(GetFilledAurr(), std::to_string(structures_count++) + "_original.json");
 
     std::vector<rapidjson::Document> documents;
     documents.reserve(structures_count);
