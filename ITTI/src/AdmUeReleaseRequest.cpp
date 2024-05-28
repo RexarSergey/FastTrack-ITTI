@@ -1,10 +1,10 @@
 
 // Pudovkin Dmitriy
-#include "AdmUeReleaseRequest.h"
+#include "../include/AdmUeReleaseRequest.h"
 #include <iostream>
-#include <rapidjson/document.h>
-#include <rapidjson/writer.h>
-#include <rapidjson/stringbuffer.h>
+#include <document.h>
+#include <writer.h>
+#include <stringbuffer.h>
 
 using namespace rapidjson;
 using namespace vran::rrc_cu::lte;

@@ -7,8 +7,8 @@
 
 class PathSwitchRequest_Handler: public StructureInterface {
 public:
-    PSR() = default;
-    PSR(const vran::s1ap::lte::PathSwitchRequest& message);
+    PathSwitchRequest_Handler() = default;
+    PathSwitchRequest_Handler(const vran::s1ap::lte::PathSwitchRequest& message);
 
     void serialize(rapidjson::Document& config) const override;
     void deserialize(const rapidjson::Document& config) override;
@@ -17,4 +17,4 @@ private:
     vran::s1ap::lte::PathSwitchRequest message_;
 };
 
-std::unique_ptr<PSR> GetFilledPathSwitchRequest_Handler();
+std::unique_ptr<PathSwitchRequest_Handler> GetFilledPathSwitchRequest_Handler();

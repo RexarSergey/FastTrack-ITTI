@@ -1,7 +1,6 @@
 // Korsakova Yulia
 
-#include "include/PathSwitchRequest.h"
-#include "rapidjson/document.h"
+#include "../include/PathSwitchRequest.h"
 #include <stdexcept>
 
 PathSwitchRequest_Handler::PathSwitchRequest_Handler(const vran::s1ap::lte::PathSwitchRequest& message)
@@ -109,7 +108,7 @@ void PathSwitchRequest_Handler::deserialize(const rapidjson::Document& config) {
     }
 }
 
-std::unique_ptr<PSR> GetFilledPathSwitchRequest_Handler() {
+std::unique_ptr<PathSwitchRequest_Handler> GetFilledPathSwitchRequest_Handler() {
     using namespace vran::cplane::common;
     vran::s1ap::lte::PathSwitchRequest message;
     message.cp_ue_id = 1234;
@@ -139,5 +138,5 @@ std::unique_ptr<PSR> GetFilledPathSwitchRequest_Handler() {
     message.security_capabilities.encryption_algorithms = 0b1010;
     message.security_capabilities.integrity_algorithms = 0b1100;
 
-    return std::make_unique<PSR>(message);
+    return std::make_unique<PathSwitchRequest_Handler>(message);
 }

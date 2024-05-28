@@ -145,26 +145,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main-v2.cpp" />
+    <ClCompile Include="src\AdmUeReleaseRequest.cpp" />
     <ClCompile Include="src\DrbAdditionalInfo.cpp" />
-    <ClCompile Include="ICSA\InitialContextSetupAcknowledgement_Handler.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="PSR.cpp" />
+    <ClCompile Include="src\InitialContextSetupAcknowledgement.cpp" />
+    <ClCompile Include="src\PathSwitchRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\AdmUeReleaseRequest.h" />
     <ClInclude Include="include\DrbAdditionalInfo.h" />
-    <ClInclude Include="ICSA\InitialContextSetupAcknowledgement_Handler.h" />
     <ClInclude Include="ICSR.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="PSR.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="include\InitialContextSetupAcknowledgement.h" />
+    <ClInclude Include="include\PathSwitchRequest.h" />
     <ClInclude Include="rapidjson\allocators.h" />
     <ClInclude Include="rapidjson\cursorstreamwrapper.h" />
     <ClInclude Include="rapidjson\document.h" />

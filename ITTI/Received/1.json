@@ -1,0 +1,1 @@
+{"path_switch_request":{"cp_ue_id":1234,"src_mme_ue_s1ap_id":5678,"erab_switch_list":[{"e_rab_id":1,"sgw_addr":{"length":4,"buffer":[192,168,1,1]},"sgw_teid":111},{"e_rab_id":2,"sgw_addr":{"length":4,"buffer":[192,168,1,2]},"sgw_teid":222}],"security_capabilities":{"encryption_algorithms":10,"integrity_algorithms":12}}}

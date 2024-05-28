@@ -21,10 +21,16 @@
     <ClCompile Include="src\DrbAdditionalInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PSR.cpp">
+    <ClCompile Include="ICSA\InitialContextSetupAcknowledgement_Handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ICSA\InitialContextSetupAcknowledgement_Handler.cpp">
+    <ClCompile Include="src\AdmUeReleaseRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InitialContextSetupAcknowledgement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PathSwitchRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,9 +149,6 @@
     <ClInclude Include="rapidjson\writer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PSR.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ICSR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -156,6 +159,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ICSA\InitialContextSetupAcknowledgement_Handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdmUeReleaseRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InitialContextSetupAcknowledgement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PathSwitchRequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

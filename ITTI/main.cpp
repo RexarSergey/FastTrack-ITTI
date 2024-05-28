@@ -5,7 +5,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/writer.h"
-#include "PSR.h"
+#include "include/PathSwitchRequest.h"
 #include "include/InitialContextSetupAcknowledgement.h"
 
 #include <deque>
@@ -61,13 +61,13 @@ void AddToMessageDeque(const std::vector<rapidjson::Document>& documents) {
             mes = std::make_unique<DrbAdditionalInfo_Handler>();
         }
         else if (documents[id].HasMember("path_switch_request")) {
-            mes = std::make_unique<PSR>();
+            mes = std::make_unique<PathSwitchRequest_Handler>();
         }
         else if (documents[id].HasMember("InitialContextSetupAcknowledgement")) {
             mes = std::make_unique<InitialContextSetupAcknowledgement_Handler>();
         }
         else if (documents[id].HasMember("AdmUeReleaseRequest")) {
-            mes = std::make_unique<AURR>();
+            mes = std::make_unique<AdmUeReleaseRequest_Handler>();
         }
         else {
             throw std::invalid_argument("Unknown structure name");
@@ -115,7 +115,7 @@ void Worker() {
 int main(){
     int structures_count = 0;
     CreateJson(GetFilledDrbAdditionalInfo_Handler(), std::to_string(structures_count++) + "_original.json");
-    CreateJson(GetFilledPsr(), std::to_string(structures_count++) + "_original.json");
+    CreateJson(GetFilledPathSwitchRequest_Handler(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledICSA(), std::to_string(structures_count++) + "_original.json");
     CreateJson(GetFilledAdmUeReleaseRequest_Handler(), std::to_string(structures_count++) + "_original.json");
 
