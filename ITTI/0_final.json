@@ -1,1 +1,0 @@
-{"drb_additional_info":{"drb_id":23,"qos_parameters":{"qci":200,"allocation_retention_priority":{"priority_level":3,"pre_emption_vulnerability":0,"pre_emption_capability":0},"gbr_qos_information":{"mbr_dl":1234,"mbr_ul":56789,"gbr_dl":5000,"gbr_ul":9000000}},"param_gtp_cu":{"address":{"length":5,"buffer":[0,1,4,9,16]},"teid":32}}}

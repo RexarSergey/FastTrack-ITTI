@@ -1,1 +1,0 @@
-{"AdmUeReleaseRequest":{"cause":{"cause":"CAUSE_NAS"},"redirectedCarrierInfo":{"present":2,"geran":{"startingARFCN":128,"bandIndicator":3,"followingARFCNs":{"present":1,"explicitListOfARFCNs":[129,130,131]}}}}}
