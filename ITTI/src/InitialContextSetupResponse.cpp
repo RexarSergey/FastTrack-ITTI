@@ -45,15 +45,18 @@ void InitialContextSetupResponse_Handler::serialize(rapidjson::Document& config)
     rapidjson::Value response(rapidjson::kObjectType);
     response.AddMember("cp_ue_id", message_.cp_ue_id, allocator);
 
-    rapidjson::Value setupList(rapidjson::kObjectType);
+    rapidjson::Value setupList(rapidjson::kArrayType);
     for (const auto& pair : message_.erab_setup_list) {
         rapidjson::Value key(rapidjson::kNumberType);
-        key.SetInt(pair.first);
+        key.SetUint(pair.first);
 
         rapidjson::Value value;
         this->SerializeERadioAccessBearerParameter(pair.second, value, allocator);
+        rapidjson::Value obj(rapidjson::kObjectType);
+        obj.AddMember("key", key, allocator);
+        obj.AddMember("value", value, allocator);
+        setupList.PushBack(obj,allocator);
         
-        setupList.AddMember(key, value, allocator);
     }
     response.AddMember("erab_setup_list", setupList, allocator);
 
@@ -68,6 +71,7 @@ void InitialContextSetupResponse_Handler::serialize(rapidjson::Document& config)
 
     config.SetObject();
     config.AddMember("initial_context_setup_response", response, allocator);
+
 }
 
 void InitialContextSetupResponse_Handler::deserialize(const rapidjson::Document& config) {
