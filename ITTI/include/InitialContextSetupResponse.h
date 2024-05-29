@@ -1,4 +1,4 @@
-// The file was executed by Mikhail Kozlov
+//Prusakov Aleksey
 
 #pragma once
 
@@ -26,4 +26,4 @@ private:
     vran::s1ap::lte::InitialContextSetupResponse message_;
 };
 
-std::unique_ptr<InitialContextSetupResponse_Handler> GetFilledDai();
+std::unique_ptr<InitialContextSetupResponse_Handler> GetFilledInitialContextSetupResponse();
