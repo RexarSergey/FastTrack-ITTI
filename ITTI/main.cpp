@@ -11,6 +11,7 @@
 #include <deque>
 #include <fstream>
 #include <iostream>
+#include <condition_variable>
 #include <memory>
 #include <mutex>
 #include <sstream>
