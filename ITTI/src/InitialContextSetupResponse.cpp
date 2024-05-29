@@ -149,7 +149,7 @@ void InitialContextSetupResponse_Handler::deserializeTransportLayerAddress(const
     }
 }
 
-std::unique_ptr<InitialContextSetupResponse_Handler> GetFilledDai() {
+std::unique_ptr<InitialContextSetupResponse_Handler> GetFilledInitialContextSetupResponse() {
     using namespace vran::cplane::common;
     using namespace vran::s1ap::lte;
     InitialContextSetupResponse message;
