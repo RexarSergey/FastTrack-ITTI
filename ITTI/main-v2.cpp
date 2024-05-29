@@ -208,7 +208,7 @@ int main() {
         CreateJson(GetFilledPathSwitchRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledICSA(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledAdmUeReleaseRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
-        CreateJson(GetFilledDai(), "Received/" + std::to_string(structures_count++) + ".json");
+        CreateJson(GetFilledInitialContextSetupResponse(), "Received/" + std::to_string(structures_count++) + ".json");
 
         std::vector<rapidjson::Document> documents;
         documents.reserve(structures_count);

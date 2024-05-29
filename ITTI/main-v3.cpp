@@ -5,6 +5,7 @@
 #include "rapidjson/writer.h"
 #include "include/PathSwitchRequest.h"
 #include "include/InitialContextSetupAcknowledgement.h"
+#include "include/InitialContextSetupResponse.h"
 
 #include <deque>
 #include <fstream>
@@ -196,6 +197,7 @@ int main() {
         CreateJson(GetFilledPathSwitchRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledICSA(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledAdmUeReleaseRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
+        CreateJson(GetFilledInitialContextSetupResponse(), "Received/" + std::to_string(structures_count++) + ".json");
 
         std::vector<rapidjson::Document> documents;
         documents.reserve(structures_count);
