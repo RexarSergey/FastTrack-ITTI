@@ -1,3 +1,12 @@
+/**
+ * @file InitialContextSetupAcknowledgement.cpp
+ * @author Sergey Igorevich Neugodnikov
+ * @brief Realization of "vran::rrc_cu::lte::InitialContextSetupAcknowledgement" class handler
+ * @date 2024-05-30
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "../include/InitialContextSetupAcknowledgement.h"
 #include "prettywriter.h"
 
@@ -10,10 +19,10 @@ void InitialContextSetupAcknowledgement_Handler::serialize(Document& config) con
 
 	Value icsa(kObjectType);
 
-	icsa.AddMember("is_accepted", message.is_accepted, allocator);
+	icsa.AddMember("is_accepted", message_.is_accepted, allocator);
 
 #pragma region "MeasConfig* measConfig" serialize
-	if (message.measConfig != nullptr)
+	if (message_.measConfig != nullptr)
 	{
 		Value measConfig(kObjectType);
 		mc_serialize(measConfig, allocator);
@@ -26,7 +35,7 @@ void InitialContextSetupAcknowledgement_Handler::serialize(Document& config) con
 #pragma endregion
 
 #pragma region "DRX_Config* cdrxConfig" serialize
-	if (message.cdrxConfig != nullptr)
+	if (message_.cdrxConfig != nullptr)
 	{
 		Value cdrxConfig(kObjectType);
 		cdrxc_serialize(cdrxConfig, allocator);
@@ -50,7 +59,7 @@ void InitialContextSetupAcknowledgement_Handler::deserialize(const Document& con
 
 	if (icsa.HasMember("is_accepted") && icsa["is_accepted"].IsBool())
 	{
-		message.is_accepted = icsa["is_accepted"].GetBool();
+		message_.is_accepted = icsa["is_accepted"].GetBool();
 	}
 
 	// "MeasConfig* measConfig" deserialize
@@ -102,7 +111,7 @@ void InitialContextSetupAcknowledgement_Handler::mc_serialize(Value& measConfig,
 	Value _asn_ctx_mc(kObjectType);
 
 #pragma region "MeasConfig__speedStatePars* speedStatePars" serialize
-	if (message.measConfig->speedStatePars != nullptr)
+	if (message_.measConfig->speedStatePars != nullptr)
 	{
 		ssp_serialize(speedStatePars_ptr, allocator);
 		measConfig.AddMember("speedStatePars", speedStatePars_ptr, allocator);
@@ -114,7 +123,7 @@ void InitialContextSetupAcknowledgement_Handler::mc_serialize(Value& measConfig,
 #pragma endregion
 
 #pragma region "MeasConfig__measScaleFactor_r12* measScaleFactor_r12" serialize
-	if (message.measConfig->measScaleFactor_r12 != nullptr)
+	if (message_.measConfig->measScaleFactor_r12 != nullptr)
 	{
 		msf_serialize(measScaleFactor_r12_ptr, allocator);
 		measConfig.AddMember("measScaleFactor_r12", measScaleFactor_r12_ptr, allocator);
@@ -125,7 +134,7 @@ void InitialContextSetupAcknowledgement_Handler::mc_serialize(Value& measConfig,
 	}
 #pragma endregion
 
-	asn_ctx_serialize(_asn_ctx_mc, message.measConfig->_asn_ctx, allocator);
+	asn_ctx_serialize(_asn_ctx_mc, message_.measConfig->_asn_ctx, allocator);
 	measConfig.AddMember("_asn_ctx", _asn_ctx_mc, allocator);
 }
 
@@ -144,18 +153,18 @@ void InitialContextSetupAcknowledgement_Handler::mc_deserialize(Value::ConstObje
 		auto asn_ctx = obj_mc["_asn_ctx"].GetObj();
 		asn_ctx_deserialize(measConfig._asn_ctx, asn_ctx);
 
-		message.measConfig = new MeasConfig(measConfig);
+		message_.measConfig = new MeasConfig(measConfig);
 	}
 	else
 	{
-		message.measConfig = nullptr;
+		message_.measConfig = nullptr;
 	}
 }
 
 void InitialContextSetupAcknowledgement_Handler::ssp_serialize(Value& speedStatePars_ptr, Document::AllocatorType& allocator) const 
 {
 	// speedStatePars_ptr prams
-	auto ssp = message.measConfig->speedStatePars;
+	auto ssp = message_.measConfig->speedStatePars;
 
 	speedStatePars_ptr.AddMember("present", static_cast<unsigned>(ssp->present), allocator);
 	if (ssp->present == MeasConfig__speedStatePars_PR_NOTHING
@@ -280,7 +289,7 @@ void InitialContextSetupAcknowledgement_Handler::ssp_deserialize(MeasConfig& mea
 void InitialContextSetupAcknowledgement_Handler::msf_serialize(Value& measScaleFactor_r12_ptr, Document::AllocatorType& allocator) const 
 {
 	// measScaleFactor_r12_ptr prams
-	auto msf = message.measConfig->measScaleFactor_r12;
+	auto msf = message_.measConfig->measScaleFactor_r12;
 
 	measScaleFactor_r12_ptr.AddMember("present", static_cast<unsigned>(msf->present), allocator);
 	if (msf->present == MeasConfig__measScaleFactor_r12_PR_NOTHING
@@ -332,10 +341,10 @@ void InitialContextSetupAcknowledgement_Handler::msf_deserialize(MeasConfig& mea
 void InitialContextSetupAcknowledgement_Handler::cdrxc_serialize(Value& cdrxConfig, Document::AllocatorType& allocator) const 
 {
 	Value choice(kObjectType);
-	cdrxConfig.AddMember("present", static_cast<unsigned>(message.cdrxConfig->present), allocator);
+	cdrxConfig.AddMember("present", static_cast<unsigned>(message_.cdrxConfig->present), allocator);
 
 
-	auto cdrxc = message.cdrxConfig;
+	auto cdrxc = message_.cdrxConfig;
 	if (cdrxc->present == DRX_Config_PR_NOTHING
 		|| cdrxc->present == DRX_Config_PR_release)
 	{
@@ -382,7 +391,7 @@ void InitialContextSetupAcknowledgement_Handler::cdrxc_serialize(Value& cdrxConf
 	}
 
 	Value _asn_ctx_drxc(kObjectType);
-	asn_ctx_serialize(_asn_ctx_drxc, message.cdrxConfig->_asn_ctx, allocator);
+	asn_ctx_serialize(_asn_ctx_drxc, message_.cdrxConfig->_asn_ctx, allocator);
 	cdrxConfig.AddMember("_asn_ctx", _asn_ctx_drxc, allocator);
 }
 
@@ -441,17 +450,17 @@ void InitialContextSetupAcknowledgement_Handler::cdrxc_deserialize(Value::ConstO
 		auto asn_ctx = obj_cdrxc["_asn_ctx"].GetObj();
 		asn_ctx_deserialize(cdrxConfig._asn_ctx, asn_ctx);
 
-		message.cdrxConfig = new DRX_Config(cdrxConfig);
+		message_.cdrxConfig = new DRX_Config(cdrxConfig);
 	}
 	else
 	{
-		message.cdrxConfig = nullptr;
+		message_.cdrxConfig = nullptr;
 	}
 }
 
 void InitialContextSetupAcknowledgement_Handler::ldrx_serialize(Value& longDRX_CycleStartOffset, DRX_Config__setup__longDRX_CycleStartOffset_PR present, Document::AllocatorType& allocator) const 
 {
-	auto ch = message.cdrxConfig->choice.setup.longDRX_CycleStartOffset.choice;
+	auto ch = message_.cdrxConfig->choice.setup.longDRX_CycleStartOffset.choice;
 
 	switch (present)
 	{
