@@ -145,10 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main-v2.cpp" />
+    <ClCompile Include="server.cpp" />
     <ClCompile Include="src\AdmUeReleaseRequest.cpp" />
     <ClCompile Include="src\DrbAdditionalInfo.cpp" />
     <ClCompile Include="src\InitialContextSetupAcknowledgement.cpp" />
+    <ClCompile Include="src\InitialContextSetupResponse.cpp" />
     <ClCompile Include="src\PathSwitchRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +162,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="include\InitialContextSetupAcknowledgement.h" />
+    <ClInclude Include="include\InitialContextSetupResponse.h" />
     <ClInclude Include="include\PathSwitchRequest.h" />
     <ClInclude Include="rapidjson\allocators.h" />
     <ClInclude Include="rapidjson\cursorstreamwrapper.h" />

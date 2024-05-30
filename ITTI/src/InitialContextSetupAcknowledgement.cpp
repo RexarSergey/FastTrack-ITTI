@@ -612,7 +612,7 @@ std::unique_ptr<InitialContextSetupAcknowledgement_Handler> GetFilledICSA()
 	ssp.choice.setup.timeToTrigger_SF._asn_ctx = asn_ctx;
 
 	ssp.choice.setup._asn_ctx = asn_ctx;
-
+	ssp._asn_ctx = asn_ctx;
 	mc.speedStatePars = new MeasConfig::MeasConfig__speedStatePars(ssp);
 	
 
