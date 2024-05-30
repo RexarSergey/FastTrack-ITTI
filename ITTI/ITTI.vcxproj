@@ -145,7 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="server.cpp" />
+    <ClCompile Include="client2.cpp" />
     <ClCompile Include="src\AdmUeReleaseRequest.cpp" />
     <ClCompile Include="src\DrbAdditionalInfo.cpp" />
     <ClCompile Include="src\InitialContextSetupAcknowledgement.cpp" />

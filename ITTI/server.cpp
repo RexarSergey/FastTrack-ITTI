@@ -235,8 +235,10 @@ int main() {
         InitializeWinsock();
         
         std::thread client1(RecieveMessages, "127.0.0.1", 8081);
+        std::thread client2(RecieveMessages, "127.0.0.1", 8082);
         std::thread worker(Worker);
         client1.join();
+        client2.join();
         worker.join();
         WSACleanup();
     }

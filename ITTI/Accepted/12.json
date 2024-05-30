@@ -1,1 +1,1 @@
-{"initial_context_setup_response":{"cp_ue_id":1,"erab_setup_list":[{"key":2,"value":{"address":{"length":2,"buffer":[0,1]},"teid":4}},{"key":3,"value":{"address":{"length":3,"buffer":[1,2,3]},"teid":6}}],"erab_failed_list":[{"e_rab_id":0,"cause":0,"cause_value":0},{"e_rab_id":3,"cause":3,"cause_value":3}]}}
+{"AdmUeReleaseRequest":{"cause":{"cause":"CAUSE_NAS"},"redirectedCarrierInfo":{"present":2,"geran":{"startingARFCN":128,"bandIndicator":3,"followingARFCNs":{"present":1,"explicitListOfARFCNs":[129,130,131]}}}}}
