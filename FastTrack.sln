@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.34902.65
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ITTI", "ITTI\ITTI.vcxproj", "{CA29DA15-2AE8-438E-96B8-533F1AD8D873}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FastTrackITTITest", "FastTrackITTITest\FastTrackITTITest.vcxproj", "{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{CA29DA15-2AE8-438E-96B8-533F1AD8D873}.Release|x64.Build.0 = Release|x64
 		{CA29DA15-2AE8-438E-96B8-533F1AD8D873}.Release|x86.ActiveCfg = Release|Win32
 		{CA29DA15-2AE8-438E-96B8-533F1AD8D873}.Release|x86.Build.0 = Release|Win32
+		{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}.Debug|x64.ActiveCfg = Debug|x64
+		{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}.Debug|x64.Build.0 = Debug|x64
+		{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}.Debug|x86.ActiveCfg = Debug|Win32
+		{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}.Debug|x86.Build.0 = Debug|Win32
+		{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}.Release|x64.ActiveCfg = Release|x64
+		{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}.Release|x64.Build.0 = Release|x64
+		{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}.Release|x86.ActiveCfg = Release|Win32
+		{2F9ABD16-1498-4B3E-AA6C-507FDAA9560F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

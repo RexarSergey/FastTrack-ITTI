@@ -167,5 +167,17 @@
     <ClInclude Include="include\InitialContextSetupResponse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="itti_structs\bearer_types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="itti_structs\cu_iface_types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="itti_structs\optional.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="itti_structs\types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

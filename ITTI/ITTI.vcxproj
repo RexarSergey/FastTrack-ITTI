@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -158,6 +158,10 @@
     <ClInclude Include="include\InitialContextSetupAcknowledgement.h" />
     <ClInclude Include="include\InitialContextSetupResponse.h" />
     <ClInclude Include="include\PathSwitchRequest.h" />
+    <ClInclude Include="itti_structs\bearer_types.hpp" />
+    <ClInclude Include="itti_structs\cu_iface_types.hpp" />
+    <ClInclude Include="itti_structs\optional.hpp" />
+    <ClInclude Include="itti_structs\types.hpp" />
     <ClInclude Include="rapidjson\allocators.h" />
     <ClInclude Include="rapidjson\cursorstreamwrapper.h" />
     <ClInclude Include="rapidjson\document.h" />
