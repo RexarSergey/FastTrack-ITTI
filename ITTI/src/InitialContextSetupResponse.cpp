@@ -78,28 +78,30 @@ void InitialContextSetupResponse_Handler::deserialize(const rapidjson::Document&
     if (!config.IsObject()) {
         throw std::runtime_error("Invalid JSON format");
     }
-
+    const rapidjson::Value& icsr = config["initial_context_setup_response"];
     // Десериализация cp_ue_id
-    if (config.HasMember("cp_ue_id") && config["cp_ue_id"].IsInt()) {
-        message_.cp_ue_id = config["cp_ue_id"].GetInt();
+    if (icsr.HasMember("cp_ue_id") && icsr["cp_ue_id"].IsInt()) {
+        message_.cp_ue_id = icsr["cp_ue_id"].GetInt();
     }
 
     // Десериализация erab_setup_list
-    if (config.HasMember("erab_setup_list") && config["erab_setup_list"].IsObject()) {
-        const rapidjson::Value& erabSetupListJson = config["erab_setup_list"];
-        for (auto it = erabSetupListJson.MemberBegin(); it != erabSetupListJson.MemberEnd(); ++it) {
-            int key = std::stoi(it->name.GetString());
+    if (icsr.HasMember("erab_setup_list") && icsr["erab_setup_list"].IsArray()) {
+        const rapidjson::Value& erabSetupListJson = icsr["erab_setup_list"];
+        for (rapidjson::SizeType i = 0; i < erabSetupListJson.Size(); ++i) {
+           
+            int key = erabSetupListJson[i]["key"].GetInt();
+            
             vran::s1ap::lte::ERadioAccessBearerParameter erabp;
 
-            this->deserializeERadioAccessBearerParameter(it->value, erabp);
+            this->deserializeERadioAccessBearerParameter(erabSetupListJson[i]["value"], erabp);
 
             message_.erab_setup_list[key] = erabp;
         }
     }
 
     // Десериализация erab_failed_list
-    if (config.HasMember("erab_failed_list") && config["erab_failed_list"].IsArray()) {
-        const rapidjson::Value& erabFailedListJson = config["erab_failed_list"];
+    if (icsr.HasMember("erab_failed_list") && icsr["erab_failed_list"].IsArray()) {
+        const rapidjson::Value& erabFailedListJson = icsr["erab_failed_list"];
         for (rapidjson::SizeType i = 0; i < erabFailedListJson.Size(); ++i) {
             vran::s1ap::lte::ERadioAccessBearerCause erabc;
 
