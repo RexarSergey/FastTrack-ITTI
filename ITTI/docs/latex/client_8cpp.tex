@@ -1,0 +1,196 @@
+\hypertarget{client_8cpp}{}\doxysection{/mnt/d/\+Work/\+Visual\+Studio2022/\+Fast\+Track/\+ITTI/client.cpp File Reference}
+\label{client_8cpp}\index{/mnt/d/Work/VisualStudio2022/FastTrack/ITTI/client.cpp@{/mnt/d/Work/VisualStudio2022/FastTrack/ITTI/client.cpp}}
+
+
+Client part.  
+
+
+{\ttfamily \#include \char`\"{}include/\+Adm\+Ue\+Release\+Request.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Drb\+Additional\+Info.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Initial\+Context\+Setup\+Acknowledgement.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Initial\+Context\+Setup\+Response.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Path\+Switch\+Request.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/document.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/filereadstream.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/writer.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$condition\+\_\+variable$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$winsock2.\+h$>$}\newline
+{\ttfamily \#include $<$ws2tcpip.\+h$>$}\newline
+{\ttfamily \#include $<$direct.\+h$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+Include dependency graph for client.\+cpp\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{client_8cpp_ab52ce7e31f0592949ba03b1d8c50ec4d}{Create\+Json}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classStructureInterface}{Structure\+Interface}} $>$ message, std\+::string file\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Create a Json object from \char`\"{}\+Structure\+Interface\char`\"{} message. \end{DoxyCompactList}\item 
+rapidjson\+::\+Document \mbox{\hyperlink{client_8cpp_a264fc06b454d75feed609ae6b7455448}{Read\+Json}} (const std\+::string \&file\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Read Json from file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{client_8cpp_a6b17fa30e0b2d8ba313f7a393860fed0}{Add\+To\+Message\+Deque}} (const std\+::vector$<$ rapidjson\+::\+Document $>$ \&documents)
+\begin{DoxyCompactList}\small\item\em Deserialize Json-\/type object messages and add them into deque. \end{DoxyCompactList}\item 
+SOCKET \mbox{\hyperlink{client_8cpp_ab03d9dcea4693beda9778d2e14aa9ac0}{Create\+Socket}} ()
+\begin{DoxyCompactList}\small\item\em Create a Socket and check if it was created. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{client_8cpp_a9fe76a817c36d3bb15a4693fd484082c}{Connect\+Socket}} (SOCKET sock, const std\+::string \&address, int port)
+\begin{DoxyCompactList}\small\item\em Connect client to server. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{client_8cpp_a99f46dfbc8afc0d52eb78e18e0c2215b}{Worker}} (const std\+::string \&address, int port)
+\begin{DoxyCompactList}\small\item\em Read message fron deque, serialize messages and send them to server. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{client_8cpp_add4f2fab639f50c380a12c8d4b637dd5}\label{client_8cpp_add4f2fab639f50c380a12c8d4b637dd5}} 
+void \mbox{\hyperlink{client_8cpp_add4f2fab639f50c380a12c8d4b637dd5}{Initialize\+Winsock}} ()
+\begin{DoxyCompactList}\small\item\em Initialize Winsocket and check if it was initialized. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{client_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em main programm entery \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{client_8cpp_a71f8c87522995018f61a29be5db9cac3}\label{client_8cpp_a71f8c87522995018f61a29be5db9cac3}} 
+std\+::mutex {\bfseries deque\+\_\+mtx}
+\item 
+\mbox{\Hypertarget{client_8cpp_ab38bf36d66d5dc7c7e2acdebfd4e794a}\label{client_8cpp_ab38bf36d66d5dc7c7e2acdebfd4e794a}} 
+std\+::condition\+\_\+variable {\bfseries deque\+\_\+cv}
+\item 
+\mbox{\Hypertarget{client_8cpp_a36622707db4d3c778585cb6bf5a6f0b9}\label{client_8cpp_a36622707db4d3c778585cb6bf5a6f0b9}} 
+std\+::mutex {\bfseries cout\+\_\+mtx}
+\item 
+\mbox{\Hypertarget{client_8cpp_aa41734674227ffbfb6f88bcab01c9f62}\label{client_8cpp_aa41734674227ffbfb6f88bcab01c9f62}} 
+std\+::deque$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classStructureInterface}{Structure\+Interface}} $>$ $>$ {\bfseries message\+\_\+deque}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Client part. 
+
+\begin{DoxyAuthor}{Author}
+Mikhail Dmitrievich Kozlov and Dmitry Sergeevich Pudovkin 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024-\/05-\/30
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2024 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{client_8cpp_a6b17fa30e0b2d8ba313f7a393860fed0}\label{client_8cpp_a6b17fa30e0b2d8ba313f7a393860fed0}} 
+\index{client.cpp@{client.cpp}!AddToMessageDeque@{AddToMessageDeque}}
+\index{AddToMessageDeque@{AddToMessageDeque}!client.cpp@{client.cpp}}
+\doxysubsubsection{\texorpdfstring{AddToMessageDeque()}{AddToMessageDeque()}}
+{\footnotesize\ttfamily void Add\+To\+Message\+Deque (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ rapidjson\+::\+Document $>$ \&}]{documents }\end{DoxyParamCaption})}
+
+
+
+Deserialize Json-\/type object messages and add them into deque. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em documents} & Array of Json-\/type object messages \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{client_8cpp_a9fe76a817c36d3bb15a4693fd484082c}\label{client_8cpp_a9fe76a817c36d3bb15a4693fd484082c}} 
+\index{client.cpp@{client.cpp}!ConnectSocket@{ConnectSocket}}
+\index{ConnectSocket@{ConnectSocket}!client.cpp@{client.cpp}}
+\doxysubsubsection{\texorpdfstring{ConnectSocket()}{ConnectSocket()}}
+{\footnotesize\ttfamily void Connect\+Socket (\begin{DoxyParamCaption}\item[{SOCKET}]{sock,  }\item[{const std\+::string \&}]{address,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+Connect client to server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sock} & Client socket \\
+\hline
+{\em address} & Server address \\
+\hline
+{\em port} & Server port \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{client_8cpp_ab52ce7e31f0592949ba03b1d8c50ec4d}\label{client_8cpp_ab52ce7e31f0592949ba03b1d8c50ec4d}} 
+\index{client.cpp@{client.cpp}!CreateJson@{CreateJson}}
+\index{CreateJson@{CreateJson}!client.cpp@{client.cpp}}
+\doxysubsubsection{\texorpdfstring{CreateJson()}{CreateJson()}}
+{\footnotesize\ttfamily void Create\+Json (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classStructureInterface}{Structure\+Interface}} $>$}]{message,  }\item[{std\+::string}]{file\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Create a Json object from \char`\"{}\+Structure\+Interface\char`\"{} message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \char`\"{}\+Structure\+Interface\char`\"{} message \\
+\hline
+{\em file\+\_\+name} & File name to save Json string \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{client_8cpp_ab03d9dcea4693beda9778d2e14aa9ac0}\label{client_8cpp_ab03d9dcea4693beda9778d2e14aa9ac0}} 
+\index{client.cpp@{client.cpp}!CreateSocket@{CreateSocket}}
+\index{CreateSocket@{CreateSocket}!client.cpp@{client.cpp}}
+\doxysubsubsection{\texorpdfstring{CreateSocket()}{CreateSocket()}}
+{\footnotesize\ttfamily SOCKET Create\+Socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a Socket and check if it was created. 
+
+\begin{DoxyReturn}{Returns}
+SOCKET 
+\end{DoxyReturn}
+\mbox{\Hypertarget{client_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{client_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{client.cpp@{client.cpp}!main@{main}}
+\index{main@{main}!client.cpp@{client.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+main programm entery 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{client_8cpp_a264fc06b454d75feed609ae6b7455448}\label{client_8cpp_a264fc06b454d75feed609ae6b7455448}} 
+\index{client.cpp@{client.cpp}!ReadJson@{ReadJson}}
+\index{ReadJson@{ReadJson}!client.cpp@{client.cpp}}
+\doxysubsubsection{\texorpdfstring{ReadJson()}{ReadJson()}}
+{\footnotesize\ttfamily rapidjson\+::\+Document Read\+Json (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Read Json from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+name} & File name to read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Json-\/type object message rapidjson\+::\+Document 
+\end{DoxyReturn}
+\mbox{\Hypertarget{client_8cpp_a99f46dfbc8afc0d52eb78e18e0c2215b}\label{client_8cpp_a99f46dfbc8afc0d52eb78e18e0c2215b}} 
+\index{client.cpp@{client.cpp}!Worker@{Worker}}
+\index{Worker@{Worker}!client.cpp@{client.cpp}}
+\doxysubsubsection{\texorpdfstring{Worker()}{Worker()}}
+{\footnotesize\ttfamily void Worker (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{address,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+Read message fron deque, serialize messages and send them to server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Server address \\
+\hline
+{\em port} & Server port \\
+\hline
+\end{DoxyParams}

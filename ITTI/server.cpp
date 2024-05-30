@@ -1,5 +1,12 @@
-// The file was executed by Mikhail Kozlov and Dmitry Pudovkin
-
+/**
+ * @file server.cpp
+ * @author Mikhail Dmitrievich Kozlov and Dmitry Sergeevich Pudovkin
+ * @brief Server part
+ * @date 2024-05-30
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "include/AdmUeReleaseRequest.h"
 #include "include/DrbAdditionalInfo.h"
 #include "include/InitialContextSetupAcknowledgement.h"
@@ -32,6 +39,10 @@ std::condition_variable deque_cv;
 std::mutex cout_mtx;
 std::deque<std::unique_ptr<StructureInterface>> message_deque;
 
+/**
+ * @brief Initialize Winsocket and check if it was initialized
+ * 
+ */
 void InitializeWinsock() {
     WSADATA wsaData;
     int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -39,6 +50,12 @@ void InitializeWinsock() {
         throw std::runtime_error("WSAStartup failed: " + std::to_string(result));
     }
 }
+
+/**
+ * @brief Create a Socket and check if it was created
+ * 
+ * @return SOCKET 
+ */
 SOCKET CreateSocket() {
     SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == INVALID_SOCKET) {
@@ -47,6 +64,13 @@ SOCKET CreateSocket() {
     return sock;
 }
 
+/**
+ * @brief Bind client socket and check if operation finished successfully
+ * 
+ * @param sock Socket to bind
+ * @param address Addres to bind
+ * @param port Port to bind
+ */
 void BindSocket(SOCKET sock, const std::string& address, int port) {
     sockaddr_in addr = {};
     addr.sin_family = AF_INET;
@@ -58,6 +82,12 @@ void BindSocket(SOCKET sock, const std::string& address, int port) {
     }
 }
 
+/**
+ * @brief Create a Json object from "StructureInterface" message
+ * 
+ * @param message "StructureInterface" message
+ * @param file_name File name to save Json string
+ */
 void CreateJson(std::unique_ptr<StructureInterface> message, std::string file_name) {
     if (!message) {
         throw std::invalid_argument("Nullptr was passed");
@@ -74,10 +104,18 @@ void CreateJson(std::unique_ptr<StructureInterface> message, std::string file_na
     output << buf.GetString();
 }
 
+/**
+ * @brief Read message fron deque, save it into file and check accepted message with originally created file
+ * 
+ */
 void Worker() {
     try {
         int message_id = 0;
         while (true) {
+            /**
+             * @brief Whait until message deque is not empty
+             * 
+             */
             std::unique_lock<std::mutex> lock(deque_mtx);
             deque_cv.wait(lock, [] { return !message_deque.empty(); });
             std::unique_ptr<StructureInterface> mes = std::move(message_deque.front());
@@ -104,6 +142,10 @@ void Worker() {
                 std::cout << "Accepted message: " << message << "\n\n";
             }
 
+            /**
+             * @brief Specifies the type of message
+             * 
+             */
             if (doc_accepted.HasMember("drb_additional_info")) {
                 CreateJson(GetFilledDrbAdditionalInfo_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");
             }
@@ -133,6 +175,10 @@ void Worker() {
                 throw std::runtime_error("Can't open input file: Accepted/" + std::to_string(message_id) + ".json");
             }
 
+            /**
+             * @brief Check file equality
+             * 
+             */
             if (std::equal(std::istreambuf_iterator<char>(original.rdbuf()),
                 std::istreambuf_iterator<char>(),
                 std::istreambuf_iterator<char>(final.rdbuf()))) {
@@ -153,6 +199,12 @@ void Worker() {
     }
 }
 
+/**
+ * @brief Recieve messages from clients, deserealize messages and put them into deque
+ * 
+ * @param address Server address for binding client socket
+ * @param port Server port for binding client socket
+ */
 void RecieveMessages(const std::string& address, int port) {
     try {
         SOCKET sock = CreateSocket();
@@ -183,12 +235,20 @@ void RecieveMessages(const std::string& address, int port) {
                 message.append(buffer, bytes_read);
 
                 size_t pos;
+                /**
+                 * @brief Read message until end
+                 * 
+                 */
                 while ((pos = message.find('\n')) != std::string::npos) {
                     std::string complete_message = message.substr(0, pos);
                     message.erase(0, pos + 1);
                     rapidjson::Document doc_accepted;
                     doc_accepted.Parse(complete_message.c_str());
                     std::unique_ptr<StructureInterface> mes;
+                    /**
+                     * @brief Specifies the type of message
+                     * 
+                     */
                     if (doc_accepted.HasMember("drb_additional_info")) {
                         mes = std::make_unique<DrbAdditionalInfo_Handler>();
                     }
@@ -227,6 +287,11 @@ void RecieveMessages(const std::string& address, int port) {
     }
 }
 
+/**
+ * @brief main programm entery
+ * 
+ * @return int 
+ */
 int main() {
     try {
         _mkdir("Files_for_check");

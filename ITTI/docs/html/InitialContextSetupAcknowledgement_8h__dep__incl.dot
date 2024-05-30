@@ -5,5 +5,11 @@ digraph "/mnt/d/Work/VisualStudio2022/FastTrack/ITTI/include/InitialContextSetup
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node1 [label="/mnt/d/Work/VisualStudio2022\l/FastTrack/ITTI/include/InitialContext\lSetupAcknowledgement.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Struct handler of \"vran::rrc_cu::lte::InitialContextSetupAcknowledgement\" struct."];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/mnt/d/Work/VisualStudio2022\l/FastTrack/ITTI/src/InitialContext\lSetupAcknowledgement.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$InitialContextSetupAcknowledgement_8cpp.html",tooltip="Realization of \"vran::rrc_cu::lte::InitialContextSetupAcknowledgement\" struct handler."];
+  Node2 [label="/mnt/d/Work/VisualStudio2022\l/FastTrack/ITTI/client.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$client_8cpp.html",tooltip="Client part."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/mnt/d/Work/VisualStudio2022\l/FastTrack/ITTI/client2.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$client2_8cpp.html",tooltip="Client part."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/mnt/d/Work/VisualStudio2022\l/FastTrack/ITTI/server.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$server_8cpp.html",tooltip="Server part."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/mnt/d/Work/VisualStudio2022\l/FastTrack/ITTI/src/InitialContext\lSetupAcknowledgement.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$InitialContextSetupAcknowledgement_8cpp.html",tooltip="Realization of \"vran::rrc_cu::lte::InitialContextSetupAcknowledgement\" struct handler."];
 }

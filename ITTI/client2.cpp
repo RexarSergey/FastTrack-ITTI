@@ -1,5 +1,12 @@
-// The file was executed by Mikhail Kozlov and Dmitry Pudovkin
-
+/**
+ * @file client2.cpp
+ * @author Mikhail Dmitrievich Kozlov and Dmitry Sergeevich Pudovkin
+ * @brief Client part
+ * @date 2024-05-30
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "include/AdmUeReleaseRequest.h"
 #include "include/DrbAdditionalInfo.h"
 #include "include/InitialContextSetupAcknowledgement.h"
@@ -32,6 +39,12 @@ std::condition_variable deque_cv;
 std::mutex cout_mtx;
 std::deque<std::unique_ptr<StructureInterface>> message_deque;
 
+/**
+ * @brief Create a Json object from "StructureInterface" message
+ * 
+ * @param message "StructureInterface" message
+ * @param file_name File name to save Json string
+ */
 void CreateJson(std::unique_ptr<StructureInterface> message, std::string file_name) {
     if (!message) {
         throw std::invalid_argument("Nullptr was passed");
@@ -48,6 +61,12 @@ void CreateJson(std::unique_ptr<StructureInterface> message, std::string file_na
     output << buf.GetString();
 }
 
+/**
+ * @brief Read Json from file
+ * 
+ * @param file_name File name to read
+ * @return Json-type object message rapidjson::Document
+ */
 rapidjson::Document ReadJson(const std::string& file_name) {
     std::ifstream file(file_name);
     if (!file) {
@@ -61,6 +80,11 @@ rapidjson::Document ReadJson(const std::string& file_name) {
     return doc;
 }
 
+/**
+ * @brief Deserialize Json-type object messages and add them into deque
+ * 
+ * @param documents Array of Json-type object messages
+ */
 void AddToMessageDeque(const std::vector<rapidjson::Document>& documents) {
     using namespace vran::cplane::common;
     for (const auto& document : documents) {
@@ -90,6 +114,11 @@ void AddToMessageDeque(const std::vector<rapidjson::Document>& documents) {
     }
 }
 
+/**
+ * @brief Create a Socket and check if it was created
+ * 
+ * @return SOCKET 
+ */
 SOCKET CreateSocket() {
     SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == INVALID_SOCKET) {
@@ -98,6 +127,13 @@ SOCKET CreateSocket() {
     return sock;
 }
 
+/**
+ * @brief Connect client to server
+ * 
+ * @param sock Client socket
+ * @param address Server address
+ * @param port Server port
+ */
 void ConnectSocket(SOCKET sock, const std::string& address, int port) {
     sockaddr_in addr = {};
     addr.sin_family = AF_INET;
@@ -109,6 +145,12 @@ void ConnectSocket(SOCKET sock, const std::string& address, int port) {
     }
 }
 
+/**
+ * @brief Read message fron deque, serialize messages and send them to server
+ * 
+ * @param address Server address
+ * @param port Server port
+ */
 void Worker(const std::string& address, int port) {
     try {
         SOCKET sock = CreateSocket();
@@ -143,6 +185,10 @@ void Worker(const std::string& address, int port) {
     }
 }
 
+/**
+ * @brief Initialize Winsocket and check if it was initialized
+ * 
+ */
 void InitializeWinsock() {
     WSADATA wsaData;
     int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -151,6 +197,11 @@ void InitializeWinsock() {
     }
 }
 
+/**
+ * @brief main programm entery
+ * 
+ * @return int 
+ */
 int main() {
     try {
         _mkdir("Received");

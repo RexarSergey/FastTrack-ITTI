@@ -1,0 +1,178 @@
+\hypertarget{server_8cpp}{}\doxysection{/mnt/d/\+Work/\+Visual\+Studio2022/\+Fast\+Track/\+ITTI/server.cpp File Reference}
+\label{server_8cpp}\index{/mnt/d/Work/VisualStudio2022/FastTrack/ITTI/server.cpp@{/mnt/d/Work/VisualStudio2022/FastTrack/ITTI/server.cpp}}
+
+
+Server part.  
+
+
+{\ttfamily \#include \char`\"{}include/\+Adm\+Ue\+Release\+Request.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Drb\+Additional\+Info.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Initial\+Context\+Setup\+Acknowledgement.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Initial\+Context\+Setup\+Response.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Path\+Switch\+Request.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/document.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/filereadstream.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/writer.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$condition\+\_\+variable$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$winsock2.\+h$>$}\newline
+{\ttfamily \#include $<$ws2tcpip.\+h$>$}\newline
+{\ttfamily \#include $<$direct.\+h$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+Include dependency graph for server.\+cpp\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{server_8cpp_add4f2fab639f50c380a12c8d4b637dd5}\label{server_8cpp_add4f2fab639f50c380a12c8d4b637dd5}} 
+void \mbox{\hyperlink{server_8cpp_add4f2fab639f50c380a12c8d4b637dd5}{Initialize\+Winsock}} ()
+\begin{DoxyCompactList}\small\item\em Initialize Winsocket and check if it was initialized. \end{DoxyCompactList}\item 
+SOCKET \mbox{\hyperlink{server_8cpp_ab03d9dcea4693beda9778d2e14aa9ac0}{Create\+Socket}} ()
+\begin{DoxyCompactList}\small\item\em Create a Socket and check if it was created. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{server_8cpp_a03eaafe49ed575bbe5469eedf830a105}{Bind\+Socket}} (SOCKET sock, const std\+::string \&address, int port)
+\begin{DoxyCompactList}\small\item\em Bind client socket and check if operation finished successfully. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{server_8cpp_ab52ce7e31f0592949ba03b1d8c50ec4d}{Create\+Json}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classStructureInterface}{Structure\+Interface}} $>$ message, std\+::string file\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Create a Json object from \char`\"{}\+Structure\+Interface\char`\"{} message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{server_8cpp_a81e0dc3d1a2f59778377d3a407dfd340}{Worker}} ()
+\begin{DoxyCompactList}\small\item\em Read message fron deque, save it into file and check accepted message with originally created file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{server_8cpp_af3534b4149ee03b3906f7cd8f1da76fd}{Recieve\+Messages}} (const std\+::string \&address, int port)
+\begin{DoxyCompactList}\small\item\em Recieve messages from clients, deserealize messages and put them into deque. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{server_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em main programm entery \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{server_8cpp_a71f8c87522995018f61a29be5db9cac3}\label{server_8cpp_a71f8c87522995018f61a29be5db9cac3}} 
+std\+::mutex {\bfseries deque\+\_\+mtx}
+\item 
+\mbox{\Hypertarget{server_8cpp_ab38bf36d66d5dc7c7e2acdebfd4e794a}\label{server_8cpp_ab38bf36d66d5dc7c7e2acdebfd4e794a}} 
+std\+::condition\+\_\+variable {\bfseries deque\+\_\+cv}
+\item 
+\mbox{\Hypertarget{server_8cpp_a36622707db4d3c778585cb6bf5a6f0b9}\label{server_8cpp_a36622707db4d3c778585cb6bf5a6f0b9}} 
+std\+::mutex {\bfseries cout\+\_\+mtx}
+\item 
+\mbox{\Hypertarget{server_8cpp_aa41734674227ffbfb6f88bcab01c9f62}\label{server_8cpp_aa41734674227ffbfb6f88bcab01c9f62}} 
+std\+::deque$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classStructureInterface}{Structure\+Interface}} $>$ $>$ {\bfseries message\+\_\+deque}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Server part. 
+
+\begin{DoxyAuthor}{Author}
+Mikhail Dmitrievich Kozlov and Dmitry Sergeevich Pudovkin 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2024-\/05-\/30
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2024 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{server_8cpp_a03eaafe49ed575bbe5469eedf830a105}\label{server_8cpp_a03eaafe49ed575bbe5469eedf830a105}} 
+\index{server.cpp@{server.cpp}!BindSocket@{BindSocket}}
+\index{BindSocket@{BindSocket}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{BindSocket()}{BindSocket()}}
+{\footnotesize\ttfamily void Bind\+Socket (\begin{DoxyParamCaption}\item[{SOCKET}]{sock,  }\item[{const std\+::string \&}]{address,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+Bind client socket and check if operation finished successfully. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sock} & Socket to bind \\
+\hline
+{\em address} & Addres to bind \\
+\hline
+{\em port} & Port to bind \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{server_8cpp_ab52ce7e31f0592949ba03b1d8c50ec4d}\label{server_8cpp_ab52ce7e31f0592949ba03b1d8c50ec4d}} 
+\index{server.cpp@{server.cpp}!CreateJson@{CreateJson}}
+\index{CreateJson@{CreateJson}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{CreateJson()}{CreateJson()}}
+{\footnotesize\ttfamily void Create\+Json (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classStructureInterface}{Structure\+Interface}} $>$}]{message,  }\item[{std\+::string}]{file\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Create a Json object from \char`\"{}\+Structure\+Interface\char`\"{} message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \char`\"{}\+Structure\+Interface\char`\"{} message \\
+\hline
+{\em file\+\_\+name} & File name to save Json string \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{server_8cpp_ab03d9dcea4693beda9778d2e14aa9ac0}\label{server_8cpp_ab03d9dcea4693beda9778d2e14aa9ac0}} 
+\index{server.cpp@{server.cpp}!CreateSocket@{CreateSocket}}
+\index{CreateSocket@{CreateSocket}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{CreateSocket()}{CreateSocket()}}
+{\footnotesize\ttfamily SOCKET Create\+Socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create a Socket and check if it was created. 
+
+\begin{DoxyReturn}{Returns}
+SOCKET 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{server_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{server.cpp@{server.cpp}!main@{main}}
+\index{main@{main}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+main programm entery 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8cpp_af3534b4149ee03b3906f7cd8f1da76fd}\label{server_8cpp_af3534b4149ee03b3906f7cd8f1da76fd}} 
+\index{server.cpp@{server.cpp}!RecieveMessages@{RecieveMessages}}
+\index{RecieveMessages@{RecieveMessages}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{RecieveMessages()}{RecieveMessages()}}
+{\footnotesize\ttfamily void Recieve\+Messages (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{address,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+Recieve messages from clients, deserealize messages and put them into deque. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Server address for binding client socket \\
+\hline
+{\em port} & Server port for binding client socket \\
+\hline
+\end{DoxyParams}
+Read message until end
+
+Specifies the type of message\mbox{\Hypertarget{server_8cpp_a81e0dc3d1a2f59778377d3a407dfd340}\label{server_8cpp_a81e0dc3d1a2f59778377d3a407dfd340}} 
+\index{server.cpp@{server.cpp}!Worker@{Worker}}
+\index{Worker@{Worker}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{Worker()}{Worker()}}
+{\footnotesize\ttfamily void Worker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Read message fron deque, save it into file and check accepted message with originally created file. 
+
+Whait until message deque is not empty
+
+Specifies the type of message
+
+Check file equality
