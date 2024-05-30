@@ -155,12 +155,6 @@
   <ItemGroup>
     <ClInclude Include="include\AdmUeReleaseRequest.h" />
     <ClInclude Include="include\DrbAdditionalInfo.h" />
-    <ClInclude Include="ICSR.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="include\InitialContextSetupAcknowledgement.h" />
     <ClInclude Include="include\InitialContextSetupResponse.h" />
     <ClInclude Include="include\PathSwitchRequest.h" />

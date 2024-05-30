@@ -1,1 +1,1 @@
-{"initial_context_setup_response":{"cp_ue_id":0,"erab_setup_list":[],"erab_failed_list":[]}}
+{"AdmUeReleaseRequest":{"cause":{"cause":"CAUSE_NAS"},"redirectedCarrierInfo":{"present":2,"geran":{"startingARFCN":128,"bandIndicator":3,"followingARFCNs":{"present":1,"explicitListOfARFCNs":[129,130,131]}}}}}

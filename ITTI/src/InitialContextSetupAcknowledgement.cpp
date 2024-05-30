@@ -582,7 +582,7 @@ void InitialContextSetupAcknowledgement_Handler::ldrx_deserialize(DRX_Config::DR
 }
 
 
-std::unique_ptr<InitialContextSetupAcknowledgement_Handler> GetFilledICSA()
+std::unique_ptr<InitialContextSetupAcknowledgement_Handler> GetFilledInitialContextSetupAcknowledgement()
 {
 	asn_struct_ctx_t asn_ctx;
 	asn_ctx.phase = SHRT_MAX;

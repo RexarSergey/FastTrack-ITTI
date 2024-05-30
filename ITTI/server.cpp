@@ -1,11 +1,13 @@
+// The file was executed by Mikhail Kozlov and Dmitry Pudovkin
+
 #include "include/AdmUeReleaseRequest.h"
 #include "include/DrbAdditionalInfo.h"
+#include "include/InitialContextSetupAcknowledgement.h"
+#include "include/InitialContextSetupResponse.h"
+#include "include/PathSwitchRequest.h"
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/writer.h"
-#include "include/PathSwitchRequest.h"
-#include "include/InitialContextSetupAcknowledgement.h"
-#include "include/InitialContextSetupResponse.h"
 
 #include <deque>
 #include <fstream>
@@ -56,93 +58,6 @@ void BindSocket(SOCKET sock, const std::string& address, int port) {
     }
 }
 
-void ListenSocket(SOCKET sock, int backlog) {
-    if (listen(sock, backlog) == SOCKET_ERROR) {
-        throw std::runtime_error("Socket listen failed: " + std::to_string(WSAGetLastError()));
-    }
-}
-
-SOCKET AcceptConnection(SOCKET sock) {
-    SOCKET client = accept(sock, nullptr, nullptr);
-    std::cout << "Connection accepted\n";
-    if (client == INVALID_SOCKET) {
-        throw std::runtime_error("Socket accept failed: " + std::to_string(WSAGetLastError()));
-    }
-    return client;
-}
-
-std::string ReceiveMessage(SOCKET sock) {
-    const int bufSize = 4096;
-    char buf[bufSize];
-    std::string message;
-
-    int bytesReceived = 0;
-    do {
-        bytesReceived = recv(sock, buf, bufSize, 0);
-        if (bytesReceived > 0) {
-            message.append(buf, bytesReceived);
-        }
-        else if (bytesReceived == 0) {
-            break;
-        }
-        else {
-            throw std::runtime_error("Receive failed: " + std::to_string(WSAGetLastError()));
-        }
-    } while (bytesReceived > 0);
-
-    return message;
-}
-
-void SendMessage(SOCKET sock, const std::string& message) {
-    int sent = send(sock, message.c_str(), static_cast<int>(message.length()), 0);
-    if (sent == SOCKET_ERROR) {
-        throw std::runtime_error("Send failed: " + std::to_string(WSAGetLastError()));
-    }
-}
-
-void HandleClient(SOCKET client) {
-    try {
-        std::string receivedMessage = ReceiveMessage(client);
-
-        rapidjson::Document doc;
-        doc.Parse(receivedMessage.c_str());
-
-        std::unique_ptr<StructureInterface> mes;
-        if (doc.HasMember("drb_additional_info")) {
-            mes = std::make_unique<DrbAdditionalInfo_Handler>();
-        }
-        else if (doc.HasMember("path_switch_request")) {
-            mes = std::make_unique<PathSwitchRequest_Handler>();
-        }
-        else if (doc.HasMember("InitialContextSetupAcknowledgement")) {
-            mes = std::make_unique<InitialContextSetupAcknowledgement_Handler>();
-        }
-        else if (doc.HasMember("AdmUeReleaseRequest")) {
-            mes = std::make_unique<AdmUeReleaseRequest_Handler>();
-        }
-        else {
-            std::cerr << "Unknown structure name: " << receivedMessage << std::endl;
-        }
-        if (mes) {
-            mes->deserialize(doc);
-
-            rapidjson::Document responseDoc;
-            mes->serialize(responseDoc);
-            rapidjson::StringBuffer buf;
-            rapidjson::Writer<rapidjson::StringBuffer> writer(buf);
-            responseDoc.Accept(writer);
-            std::string responseMessage = buf.GetString();
-
-            SendMessage(client, responseMessage);
-        }
-    }
-    catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-
-    closesocket(client);
-}
-
 void CreateJson(std::unique_ptr<StructureInterface> message, std::string file_name) {
     if (!message) {
         throw std::invalid_argument("Nullptr was passed");
@@ -159,10 +74,89 @@ void CreateJson(std::unique_ptr<StructureInterface> message, std::string file_na
     output << buf.GetString();
 }
 
-void Worker(const std::string& address, int port) {
+void Worker() {
+    try {
+        int message_id = 0;
+        while (true) {
+            std::unique_lock<std::mutex> lock(deque_mtx);
+            deque_cv.wait(lock, [] { return !message_deque.empty(); });
+            std::unique_ptr<StructureInterface> mes = std::move(message_deque.front());
+            message_deque.pop_front();
+            lock.unlock();
+            rapidjson::Document doc_accepted;
+            mes->serialize(doc_accepted);
+
+            rapidjson::StringBuffer buffer;
+            rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+            doc_accepted.Accept(writer);
+
+            std::string message = buffer.GetString();
+
+            std::string file_name = "Accepted/" + std::to_string(message_id) + ".json";
+            std::ofstream output(file_name);
+            if (!output) {
+                throw std::runtime_error("Can't open output file: " + file_name);
+            }
+            output << message;
+            output.close();
+            {
+                std::lock_guard<std::mutex> lock(cout_mtx);
+                std::cout << "Accepted message: " << message << "\n\n";
+            }
+
+            if (doc_accepted.HasMember("drb_additional_info")) {
+                CreateJson(GetFilledDrbAdditionalInfo_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");
+            }
+            else if (doc_accepted.HasMember("path_switch_request")) {
+                CreateJson(GetFilledPathSwitchRequest_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");
+            }
+            else if (doc_accepted.HasMember("InitialContextSetupAcknowledgement")) {
+                CreateJson(GetFilledInitialContextSetupAcknowledgement(), "Files_for_check/" + std::to_string(message_id) + ".json");
+            }
+            else if (doc_accepted.HasMember("AdmUeReleaseRequest")) {
+                CreateJson(GetFilledAdmUeReleaseRequest_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");
+            }
+            else if (doc_accepted.HasMember("initial_context_setup_response")) {
+                CreateJson(GetFilledInitialContextSetupResponse(), "Files_for_check/" + std::to_string(message_id) + ".json");
+            }
+            else {
+                std::cerr << "Unknown structure name: " << message << std::endl;
+                message_id++;
+                continue;
+            }
+            std::ifstream original("Files_for_check/" + std::to_string(message_id) + ".json", std::ios::binary);
+            if (!original) {
+                throw std::runtime_error("Can't open input file: Files_for_check/" + std::to_string(message_id) + ".json");
+            }
+            std::ifstream final(file_name);
+            if (!final) {
+                throw std::runtime_error("Can't open input file: Accepted/" + std::to_string(message_id) + ".json");
+            }
+
+            if (std::equal(std::istreambuf_iterator<char>(original.rdbuf()),
+                std::istreambuf_iterator<char>(),
+                std::istreambuf_iterator<char>(final.rdbuf()))) {
+                    {
+                        std::lock_guard<std::mutex> lock(cout_mtx);
+                        std::cout << "Pass message id: " << message_id << "\n\n";
+                    }
+            }
+            else {
+                std::lock_guard<std::mutex> lock(cout_mtx);
+                std::cout << "Fail message id: " << message_id << "\n\n";
+            }
+            message_id++;
+        }
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Error in Worker: " << e.what() << std::endl;
+    }
+}
+
+void RecieveMessages(const std::string& address, int port) {
     try {
         SOCKET sock = CreateSocket();
-        BindSocket(sock, "127.0.0.1", port);
+        BindSocket(sock, address, port);
         listen(sock, 5);
 
         while (true) {
@@ -192,65 +186,37 @@ void Worker(const std::string& address, int port) {
                 while ((pos = message.find('\n')) != std::string::npos) {
                     std::string complete_message = message.substr(0, pos);
                     message.erase(0, pos + 1);
-
-                    std::string file_name = "Accepted/" + std::to_string(message_id) + ".json";
-                    std::ofstream output(file_name);
-                    if (!output) {
-                        throw std::runtime_error("Can't open output file: " + file_name);
-                    }
-                    output << complete_message;
-                    output.close();
-                    {
-                        std::lock_guard<std::mutex> lock(cout_mtx);
-                        std::cout << "Accepted message: " << complete_message << "\n\n";
-                    }
-
                     rapidjson::Document doc_accepted;
                     doc_accepted.Parse(complete_message.c_str());
+                    std::unique_ptr<StructureInterface> mes;
                     if (doc_accepted.HasMember("drb_additional_info")) {
-                        CreateJson(GetFilledDrbAdditionalInfo_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");
+                        mes = std::make_unique<DrbAdditionalInfo_Handler>();
                     }
                     else if (doc_accepted.HasMember("path_switch_request")) {
-                        CreateJson(GetFilledPathSwitchRequest_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");
+                        mes = std::make_unique<PathSwitchRequest_Handler>();
                     }
                     else if (doc_accepted.HasMember("InitialContextSetupAcknowledgement")) {
-                        CreateJson(GetFilledInitialContextSetupAcknowledgement(), "Files_for_check/" + std::to_string(message_id) + ".json");
+                        mes = std::make_unique<InitialContextSetupAcknowledgement_Handler>();
                     }
                     else if (doc_accepted.HasMember("AdmUeReleaseRequest")) {
-                        CreateJson(GetFilledAdmUeReleaseRequest_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");
+                        mes = std::make_unique<AdmUeReleaseRequest_Handler>();
                     }
                     else if (doc_accepted.HasMember("initial_context_setup_response")) {
-                        CreateJson(GetFilledInitialContextSetupResponse(), "Files_for_check/" + std::to_string(message_id) + ".json");
+                        mes = std::make_unique<InitialContextSetupResponse_Handler>();
                     }
                     else {
-                        throw std::invalid_argument("Unknown structure name");
+                        std::cerr << "Unknown structure name: " << complete_message << std::endl;
+                        message_id++;
+                        continue;
                     }
-                    std::ifstream original("Files_for_check/" + std::to_string(message_id) + ".json", std::ios::binary);
-                    if (!original) {
-                        throw std::runtime_error("Can't open input file: Files_for_check/" + std::to_string(message_id) + ".json");
-                    }
-                    std::ifstream final(file_name);
-                    if (!final) {
-                        throw std::runtime_error("Can't open input file: Accepted/" + std::to_string(message_id) + ".json");
-                    }
-
-                    if (std::equal(std::istreambuf_iterator<char>(original.rdbuf()),
-                        std::istreambuf_iterator<char>(),
-                        std::istreambuf_iterator<char>(final.rdbuf()))) {
-                        {
-                            std::lock_guard<std::mutex> lock(cout_mtx);
-                            std::cout << "Pass message id: " << message_id << "\n\n";
-                        }
-                    }
-                    else {
-                        std::lock_guard<std::mutex> lock(cout_mtx);
-                        std::cout << "Fail message id: " << message_id << "\n\n";
-                    }
+                    mes->deserialize(doc_accepted);
+                    std::lock_guard<std::mutex> lock(deque_mtx);
+                    message_deque.push_back(std::move(mes));
+                    deque_cv.notify_one();
 
                     message_id++;
                 }
             }
-
             closesocket(client_sock);
         }
 
@@ -267,8 +233,10 @@ int main() {
         _mkdir("Accepted");
 
         InitializeWinsock();
-        std::thread worker(Worker, "127.0.0.1", 8081);
-
+        
+        std::thread client1(RecieveMessages, "127.0.0.1", 8081);
+        std::thread worker(Worker);
+        client1.join();
         worker.join();
         WSACleanup();
     }

@@ -149,9 +149,6 @@
     <ClInclude Include="rapidjson\writer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ICSR.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\DrbAdditionalInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
