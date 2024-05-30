@@ -2,7 +2,7 @@
 
 ## ITTI
 
-Документация кода в виде .html файла расположена [тут](https://github.com/RexarSergey/FastTrack-ITTI/blob/master/ITTI/docs/html/index.html)
+Документация кода в виде .html файла расположена [тут](https://github.com/RexarSergey/FastTrack-ITTI/blob/master/ITTI/docs/html/index.html), однако для просмотра необходимо скачать или склонировать репозиторий
 
 ## Команда 2
 
