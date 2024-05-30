@@ -1,4 +1,12 @@
-// The file was executed by Mikhail Kozlov
+/**
+ * @file DrbAdditionalInfo.cpp
+ * @author Mikhail Dmitrievich Kozlov
+ * @brief Realization of "vran::rrc_du::DrbAdditionalInfo" class handler
+ * @date 2024-05-30
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 
 #include "../include/DrbAdditionalInfo.h"
 

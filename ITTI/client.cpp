@@ -162,7 +162,7 @@ int main(){
         for (int i = 0; i < count_threads; ++i) {
             CreateJson(GetFilledDrbAdditionalInfo_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
             CreateJson(GetFilledPathSwitchRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
-            CreateJson(GetFilledICSA(), "Received/" + std::to_string(structures_count++) + ".json");
+            CreateJson(GetFilledInitialContextSetupAcknowledgement(), "Received/" + std::to_string(structures_count++) + ".json");
             CreateJson(GetFilledAdmUeReleaseRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
             CreateJson(GetFilledInitialContextSetupResponse(), "Received/" + std::to_string(structures_count++) + ".json");
         }

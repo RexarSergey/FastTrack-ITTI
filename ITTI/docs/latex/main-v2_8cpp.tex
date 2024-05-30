@@ -1,0 +1,87 @@
+\hypertarget{main-v2_8cpp}{}\doxysection{/mnt/d/\+Work/\+Visual\+Studio2022/\+Fast\+Track/\+ITTI/main-\/v2.cpp File Reference}
+\label{main-v2_8cpp}\index{/mnt/d/Work/VisualStudio2022/FastTrack/ITTI/main-\/v2.cpp@{/mnt/d/Work/VisualStudio2022/FastTrack/ITTI/main-\/v2.cpp}}
+{\ttfamily \#include \char`\"{}include/\+Adm\+Ue\+Release\+Request.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Drb\+Additional\+Info.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/document.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/filereadstream.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rapidjson/writer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Path\+Switch\+Request.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Initial\+Context\+Setup\+Acknowledgement.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}include/\+Initial\+Context\+Setup\+Response.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$condition\+\_\+variable$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$winsock2.\+h$>$}\newline
+{\ttfamily \#include $<$ws2tcpip.\+h$>$}\newline
+{\ttfamily \#include $<$direct.\+h$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+Include dependency graph for main-\/v2.cpp\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_add4f2fab639f50c380a12c8d4b637dd5}\label{main-v2_8cpp_add4f2fab639f50c380a12c8d4b637dd5}} 
+void {\bfseries Initialize\+Winsock} ()
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_ab03d9dcea4693beda9778d2e14aa9ac0}\label{main-v2_8cpp_ab03d9dcea4693beda9778d2e14aa9ac0}} 
+SOCKET {\bfseries Create\+Socket} ()
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_a03eaafe49ed575bbe5469eedf830a105}\label{main-v2_8cpp_a03eaafe49ed575bbe5469eedf830a105}} 
+void {\bfseries Bind\+Socket} (SOCKET sock, const std\+::string \&address, int port)
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_a9fe76a817c36d3bb15a4693fd484082c}\label{main-v2_8cpp_a9fe76a817c36d3bb15a4693fd484082c}} 
+void {\bfseries Connect\+Socket} (SOCKET sock, const std\+::string \&address, int port)
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_a5bfcc37a08130c9f4863ac1ce8d0405a}\label{main-v2_8cpp_a5bfcc37a08130c9f4863ac1ce8d0405a}} 
+void {\bfseries Create\+Json} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classStructureInterface}{Structure\+Interface}} $>$ message, const std\+::string \&file\+\_\+name)
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_a264fc06b454d75feed609ae6b7455448}\label{main-v2_8cpp_a264fc06b454d75feed609ae6b7455448}} 
+rapidjson\+::\+Document {\bfseries Read\+Json} (const std\+::string \&file\+\_\+name)
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_ac26175238bbb6a3cebe0ebca11f894f1}\label{main-v2_8cpp_ac26175238bbb6a3cebe0ebca11f894f1}} 
+void {\bfseries Add\+To\+Message\+Deque} (const std\+::vector$<$ rapidjson\+::\+Document $>$ \&documents, const std\+::string \&address, int port)
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_a84fa5bee7c2823c5032077f88b5b009b}\label{main-v2_8cpp_a84fa5bee7c2823c5032077f88b5b009b}} 
+void {\bfseries Worker} (int port)
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main-v2_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+int {\bfseries main} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_a71f8c87522995018f61a29be5db9cac3}\label{main-v2_8cpp_a71f8c87522995018f61a29be5db9cac3}} 
+std\+::mutex {\bfseries deque\+\_\+mtx}
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_ab38bf36d66d5dc7c7e2acdebfd4e794a}\label{main-v2_8cpp_ab38bf36d66d5dc7c7e2acdebfd4e794a}} 
+std\+::condition\+\_\+variable {\bfseries deque\+\_\+cv}
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_a36622707db4d3c778585cb6bf5a6f0b9}\label{main-v2_8cpp_a36622707db4d3c778585cb6bf5a6f0b9}} 
+std\+::mutex {\bfseries cout\+\_\+mtx}
+\item 
+\mbox{\Hypertarget{main-v2_8cpp_aa41734674227ffbfb6f88bcab01c9f62}\label{main-v2_8cpp_aa41734674227ffbfb6f88bcab01c9f62}} 
+std\+::deque$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classStructureInterface}{Structure\+Interface}} $>$ $>$ {\bfseries message\+\_\+deque}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+your name (\href{mailto:you@domain.com}{\texttt{ you@domain.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2024-\/05-\/29
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2024 
+\end{DoxyCopyright}

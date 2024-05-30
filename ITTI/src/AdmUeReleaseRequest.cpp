@@ -1,5 +1,12 @@
-
-// Pudovkin Dmitriy
+/**
+ * @file AdmUeReleaseRequest.cpp
+ * @author Dmitry Sergeevich Pudovkin
+ * @brief Realization of "vran::rrc_cu::lte::AdmUeReleaseRequest" class handler
+ * @date 2024-05-30
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "../include/AdmUeReleaseRequest.h"
 #include <iostream>
 #include <document.h>
@@ -9,6 +16,12 @@
 using namespace rapidjson;
 using namespace vran::rrc_cu::lte;
 
+/**
+ * @brief Serialize "CarrierFreqsGERAN" struct
+ * 
+ * @param carrierFreqs Ptr of the "CarrierFreqsGERAN_t" for reading
+ * @param writer Handler for generation JSON text
+ */
 void serializeCarrierFreqsGERAN(const CarrierFreqsGERAN_t* carrierFreqs, Writer<StringBuffer>& writer) {
     writer.StartObject();
     writer.Key("startingARFCN");
@@ -53,6 +66,12 @@ void serializeCarrierFreqsGERAN(const CarrierFreqsGERAN_t* carrierFreqs, Writer<
     writer.EndObject();
 }
 
+/**
+ * @brief Deserialize "CarrierFreqsGERAN" struct
+ * 
+ * @param doc JSON-type object storage of "CarrierFreqsGERAN_t" struct
+ * @param carrierFreqs Ptr of the "CarrierFreqsGERAN_t" for writing
+ */
 void deserializeCarrierFreqsGERAN(const Value& doc, CarrierFreqsGERAN_t* carrierFreqs) {
     carrierFreqs->startingARFCN = doc["startingARFCN"].GetUint();
     carrierFreqs->bandIndicator = doc["bandIndicator"].GetUint();
@@ -105,6 +124,12 @@ void deserializeCarrierFreqsGERAN(const Value& doc, CarrierFreqsGERAN_t* carrier
     }
 }
 
+/**
+ * @brief Serialize "CarrierFreqCDMA2000" struct
+ * 
+ * @param carrierFreq Ptr of the "CarrierFreqCDMA2000_t" for reading
+ * @param writer Handler for generation JSON text
+ */
 void serializeCarrierFreqCDMA2000(const CarrierFreqCDMA2000_t* carrierFreq, Writer<StringBuffer>& writer) {
     writer.StartObject();
     writer.Key("bandClass");
@@ -116,6 +141,12 @@ void serializeCarrierFreqCDMA2000(const CarrierFreqCDMA2000_t* carrierFreq, Writ
     writer.EndObject();
 }
 
+/**
+ * @brief Deserialize "CarrierFreqCDMA2000" struct
+ * 
+ * @param json JSON-type object storage of "CarrierFreqCDMA2000_t" struct
+ * @param carrierFreq Ref of the "CarrierFreqCDMA2000_t" for writing
+ */
 void deserializeCarrierFreqCDMA2000(const Value& json, CarrierFreqCDMA2000_t& carrierFreq) {
     if (json.HasMember("bandClass") && json["bandClass"].IsInt64()) {
         carrierFreq.bandClass = static_cast<BandclassCDMA2000_t>(json["bandClass"].GetInt64());
@@ -126,6 +157,12 @@ void deserializeCarrierFreqCDMA2000(const Value& json, CarrierFreqCDMA2000_t& ca
     }
 }
 
+/**
+ * @brief Serialize "CarrierFreqListUTRA_TDD_r10" struct
+ * 
+ * @param carrierFreqList Ptr of the "CarrierFreqListUTRA_TDD_r10_t" for reading
+ * @param writer Handler for generation JSON text
+ */
 void serializeCarrierFreqListUTRA_TDD_r10(const CarrierFreqListUTRA_TDD_r10_t* carrierFreqList, Writer<StringBuffer>& writer) {
     writer.StartArray();
     for (size_t i = 0; i < carrierFreqList->list.count; i++) {
@@ -134,6 +171,12 @@ void serializeCarrierFreqListUTRA_TDD_r10(const CarrierFreqListUTRA_TDD_r10_t* c
     writer.EndArray();
 }
 
+/**
+ * @brief Deserialize "CarrierFreqListUTRA_TDD_r10" struct
+ * 
+ * @param json JSON-type object storage of "CarrierFreqListUTRA_TDD_r10_t" struct
+ * @param carrierFreqList Ptr of the "CarrierFreqListUTRA_TDD_r10_t" for writing
+ */
 void deserializeCarrierFreqListUTRA_TDD_r10(const Value& json, CarrierFreqListUTRA_TDD_r10_t* carrierFreqList) {
     const Value& list = json;
     carrierFreqList->list.count = list.Size();
@@ -154,6 +197,12 @@ void deserializeCarrierFreqListUTRA_TDD_r10(const Value& json, CarrierFreqListUT
     }
 }
 
+/**
+ * @brief Serialize "RedirectedCarrierInfo" struct
+ * 
+ * @param carrierInfo Ptr of the "RedirectedCarrierInfo_t" for reading
+ * @param writer Handler for generation JSON text
+ */
 void serializeRedirectedCarrierInfo(const RedirectedCarrierInfo_t* carrierInfo, Writer<StringBuffer>& writer) {
     writer.StartObject();
     writer.Key("present");
@@ -195,6 +244,12 @@ void serializeRedirectedCarrierInfo(const RedirectedCarrierInfo_t* carrierInfo, 
     writer.EndObject();
 }
 
+/**
+ * @brief Deserialize "RedirectedCarrierInfo" struct
+ * 
+ * @param json JSON-type object storage of "RedirectedCarrierInfo_t" struct
+ * @param carrierInfo Ref of the "RedirectedCarrierInfo_t" for writing
+ */
 void deserializeRedirectedCarrierInfo(const Value& json, RedirectedCarrierInfo_t& carrierInfo) {
     if (json.HasMember("present") && json["present"].IsUint()) {
         carrierInfo.present = static_cast<RedirectedCarrierInfo_PR>(json["present"].GetUint());
@@ -241,6 +296,12 @@ void deserializeRedirectedCarrierInfo(const Value& json, RedirectedCarrierInfo_t
     }
 }
 
+/**
+ * @brief Serialize "RrcCause" struct
+ * 
+ * @param rrcCause Ref of the "RrcCause" for reading
+ * @param writer Handler for generation JSON text
+ */
 void serializeRrcCause(const vran::cplane::common::RrcCause& rrcCause, Writer<StringBuffer>& writer) {
     writer.StartObject();
 
@@ -278,6 +339,12 @@ void serializeRrcCause(const vran::cplane::common::RrcCause& rrcCause, Writer<St
     writer.EndObject();
 }
 
+/**
+ * @brief Deserialize "RrcCause" struct
+ * 
+ * @param json JSON-type object storage of "RrcCause" struct
+ * @param rrcCause Ref of the "RrcCause" for writing
+ */
 void deserializeRrcCause(const Value& json, vran::cplane::common::RrcCause& rrcCause) {
     if (json.HasMember("cause") && json["cause"].IsString()) {
         const char* causeStr = json["cause"].GetString();
@@ -305,6 +372,12 @@ void deserializeRrcCause(const Value& json, vran::cplane::common::RrcCause& rrcC
     }
 }
 
+/**
+ * @brief Serialize "AdmUeReleaseRequest" struct
+ * 
+ * @param request Ref of the "AdmUeReleaseRequest" for reading
+ * @param buffer Buffer for generation JSON text handler
+ */
 void serializeAdmUeReleaseRequest(const AdmUeReleaseRequest& request, StringBuffer& buffer) {
     Writer<StringBuffer> writer(buffer);
     writer.StartObject();
@@ -324,6 +397,12 @@ void serializeAdmUeReleaseRequest(const AdmUeReleaseRequest& request, StringBuff
     writer.EndObject();
 }
 
+/**
+ * @brief Deserialize "AdmUeReleaseRequest" struct
+ * 
+ * @param json JSON-type object storage of "AdmUeReleaseRequest" struct
+ * @param request Ref of the "AdmUeReleaseRequest" for writing
+ */
 void deserializeAdmUeReleaseRequest(const Value& json, AdmUeReleaseRequest& request) {
     if (json.HasMember("AdmUeReleaseRequest") && json["AdmUeReleaseRequest"].IsObject()) {
         const Value& admUeReleaseRequest = json["AdmUeReleaseRequest"];

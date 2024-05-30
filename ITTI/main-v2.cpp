@@ -1,3 +1,13 @@
+/**
+ * @file main-v2.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2024-05-29
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "include/AdmUeReleaseRequest.h"
 #include "include/DrbAdditionalInfo.h"
 #include "rapidjson/document.h"
@@ -206,7 +216,7 @@ int main() {
         int structures_count = 0;
         CreateJson(GetFilledDrbAdditionalInfo_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledPathSwitchRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
-        CreateJson(GetFilledICSA(), "Received/" + std::to_string(structures_count++) + ".json");
+        CreateJson(GetFilledInitialContextSetupAcknowledgement(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledAdmUeReleaseRequest_Handler(), "Received/" + std::to_string(structures_count++) + ".json");
         CreateJson(GetFilledInitialContextSetupResponse(), "Received/" + std::to_string(structures_count++) + ".json");
 

@@ -1,7 +1,7 @@
 /**
  * @file InitialContextSetupAcknowledgement.cpp
  * @author Sergey Igorevich Neugodnikov
- * @brief Realization of "vran::rrc_cu::lte::InitialContextSetupAcknowledgement" class handler
+ * @brief Realization of "vran::rrc_cu::lte::InitialContextSetupAcknowledgement" struct handler
  * @date 2024-05-30
  * 
  * @copyright Copyright (c) 2024

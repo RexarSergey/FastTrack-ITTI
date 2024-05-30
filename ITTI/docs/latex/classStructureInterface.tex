@@ -1,0 +1,91 @@
+\hypertarget{classStructureInterface}{}\doxysection{Structure\+Interface Class Reference}
+\label{classStructureInterface}\index{StructureInterface@{StructureInterface}}
+
+
+Inheritance diagram for Structure\+Interface\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{classStructureInterface_a12246b3333d8b814fa6f2dd8ab2d99ef}{serialize}} (rapidjson\+::\+Document \&config) const =0
+\begin{DoxyCompactList}\small\item\em Serialize functoin for the messages. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classStructureInterface_a629def89b87df4af2bb9d525e312dab2}{deserialize}} (const rapidjson\+::\+Document \&config)=0
+\begin{DoxyCompactList}\small\item\em Deserialize functoin for the message. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classStructureInterface_add24cfcb1f152ed1c3eda566d477b5ac}{Get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Get the Id parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classStructureInterface_aeabbed8e873b830cb8d9504c59e1cb0d}{Set\+Id}} (int id)
+\begin{DoxyCompactList}\small\item\em Set the id parameter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classStructureInterface_a629def89b87df4af2bb9d525e312dab2}\label{classStructureInterface_a629def89b87df4af2bb9d525e312dab2}} 
+\index{StructureInterface@{StructureInterface}!deserialize@{deserialize}}
+\index{deserialize@{deserialize}!StructureInterface@{StructureInterface}}
+\doxysubsubsection{\texorpdfstring{deserialize()}{deserialize()}}
+{\footnotesize\ttfamily virtual void Structure\+Interface\+::deserialize (\begin{DoxyParamCaption}\item[{const rapidjson\+::\+Document \&}]{config }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Deserialize functoin for the message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & Parameter from which information is stored to the message \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classPathSwitchRequest__Handler_a176650edac5a84b1ef1cde72ee1c7b3a}{Path\+Switch\+Request\+\_\+\+Handler}}, \mbox{\hyperlink{classInitialContextSetupResponse__Handler_a8461736c4e59bc19300d7f943d35e8de}{Initial\+Context\+Setup\+Response\+\_\+\+Handler}}, \mbox{\hyperlink{classDrbAdditionalInfo__Handler_a9704189776fe53de31d37a8c2ccaec5d}{Drb\+Additional\+Info\+\_\+\+Handler}}, and \mbox{\hyperlink{classAdmUeReleaseRequest__Handler_a8384cf2c6f46b03698bcf9eb5867dcbb}{Adm\+Ue\+Release\+Request\+\_\+\+Handler}}.
+
+\mbox{\Hypertarget{classStructureInterface_add24cfcb1f152ed1c3eda566d477b5ac}\label{classStructureInterface_add24cfcb1f152ed1c3eda566d477b5ac}} 
+\index{StructureInterface@{StructureInterface}!GetId@{GetId}}
+\index{GetId@{GetId}!StructureInterface@{StructureInterface}}
+\doxysubsubsection{\texorpdfstring{GetId()}{GetId()}}
+{\footnotesize\ttfamily int Structure\+Interface\+::\+Get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Id parameter. 
+
+\begin{DoxyReturn}{Returns}
+Message id 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classStructureInterface_a12246b3333d8b814fa6f2dd8ab2d99ef}\label{classStructureInterface_a12246b3333d8b814fa6f2dd8ab2d99ef}} 
+\index{StructureInterface@{StructureInterface}!serialize@{serialize}}
+\index{serialize@{serialize}!StructureInterface@{StructureInterface}}
+\doxysubsubsection{\texorpdfstring{serialize()}{serialize()}}
+{\footnotesize\ttfamily virtual void Structure\+Interface\+::serialize (\begin{DoxyParamCaption}\item[{rapidjson\+::\+Document \&}]{config }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Serialize functoin for the messages. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & Parameter in which serializable information is stored \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classPathSwitchRequest__Handler_a6e3b13db62a3f9339f506b1491d0bdbf}{Path\+Switch\+Request\+\_\+\+Handler}}, \mbox{\hyperlink{classInitialContextSetupResponse__Handler_a14f6745d04a6737f94873f538a156ff3}{Initial\+Context\+Setup\+Response\+\_\+\+Handler}}, \mbox{\hyperlink{classDrbAdditionalInfo__Handler_adcd19f7c7397c56ce9ab2b12d8efb2d4}{Drb\+Additional\+Info\+\_\+\+Handler}}, and \mbox{\hyperlink{classAdmUeReleaseRequest__Handler_af124b87b1e8300bdb9a7f6947fd93806}{Adm\+Ue\+Release\+Request\+\_\+\+Handler}}.
+
+\mbox{\Hypertarget{classStructureInterface_aeabbed8e873b830cb8d9504c59e1cb0d}\label{classStructureInterface_aeabbed8e873b830cb8d9504c59e1cb0d}} 
+\index{StructureInterface@{StructureInterface}!SetId@{SetId}}
+\index{SetId@{SetId}!StructureInterface@{StructureInterface}}
+\doxysubsubsection{\texorpdfstring{SetId()}{SetId()}}
+{\footnotesize\ttfamily void Structure\+Interface\+::\+Set\+Id (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the id parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Message id \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/mnt/d/\+Work/\+Visual\+Studio2022/\+Fast\+Track/\+ITTI/include/\mbox{\hyperlink{structure__interface_8h}{structure\+\_\+interface.\+h}}\end{DoxyCompactItemize}

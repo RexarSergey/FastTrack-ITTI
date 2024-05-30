@@ -214,7 +214,7 @@ void Worker(const std::string& address, int port) {
                         CreateJson(GetFilledPathSwitchRequest_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");
                     }
                     else if (doc_accepted.HasMember("InitialContextSetupAcknowledgement")) {
-                        CreateJson(GetFilledICSA(), "Files_for_check/" + std::to_string(message_id) + ".json");
+                        CreateJson(GetFilledInitialContextSetupAcknowledgement(), "Files_for_check/" + std::to_string(message_id) + ".json");
                     }
                     else if (doc_accepted.HasMember("AdmUeReleaseRequest")) {
                         CreateJson(GetFilledAdmUeReleaseRequest_Handler(), "Files_for_check/" + std::to_string(message_id) + ".json");

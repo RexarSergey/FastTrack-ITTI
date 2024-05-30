@@ -1,5 +1,12 @@
-// Korsakova Yulia
-
+/**
+ * @file PathSwitchRequest.cpp
+ * @author Korsakova Yulia Dmitrievna
+ * @brief Realization of "vran::s1ap::lte::PathSwitchRequest" class handler
+ * @date 2024-05-30
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "../include/PathSwitchRequest.h"
 #include <stdexcept>
 
