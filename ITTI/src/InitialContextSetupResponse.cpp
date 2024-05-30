@@ -1,5 +1,12 @@
-//Prusakov Aleksey
-
+/**
+ * @file InitialContextSetupResponse.cpp
+ * @author Alexey Andreyevich Prusakov
+ * @brief Realization of "vran::s1ap::lte::InitialContextSetupResponse" class handler
+ * @date 2024-05-30
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "../include/InitialContextSetupResponse.h"
 #include <iostream>
 #include <document.h>
@@ -79,12 +86,12 @@ void InitialContextSetupResponse_Handler::deserialize(const rapidjson::Document&
         throw std::runtime_error("Invalid JSON format");
     }
     const rapidjson::Value& icsr = config["initial_context_setup_response"];
-    // Десериализация cp_ue_id
+    // Check if "icsr" has "cp_ue_id"
     if (icsr.HasMember("cp_ue_id") && icsr["cp_ue_id"].IsInt()) {
         message_.cp_ue_id = icsr["cp_ue_id"].GetInt();
     }
 
-    // Десериализация erab_setup_list
+    // Check if "icsr" has "erab_setup_list"
     if (icsr.HasMember("erab_setup_list") && icsr["erab_setup_list"].IsArray()) {
         const rapidjson::Value& erabSetupListJson = icsr["erab_setup_list"];
         for (rapidjson::SizeType i = 0; i < erabSetupListJson.Size(); ++i) {
@@ -99,7 +106,7 @@ void InitialContextSetupResponse_Handler::deserialize(const rapidjson::Document&
         }
     }
 
-    // Десериализация erab_failed_list
+    // Check if "icsr" has "erab_failed_list"
     if (icsr.HasMember("erab_failed_list") && icsr["erab_failed_list"].IsArray()) {
         const rapidjson::Value& erabFailedListJson = icsr["erab_failed_list"];
         for (rapidjson::SizeType i = 0; i < erabFailedListJson.Size(); ++i) {

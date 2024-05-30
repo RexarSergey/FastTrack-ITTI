@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pathswitchrequest_2ecpp_51',['PathSwitchRequest.cpp',['../PathSwitchRequest_8cpp.html',1,'']]],
-  ['pathswitchrequest_2eh_52',['PathSwitchRequest.h',['../PathSwitchRequest_8h.html',1,'']]]
+  ['structure_5finterface_2eh_61',['structure_interface.h',['../structure__interface_8h.html',1,'']]]
 ];
