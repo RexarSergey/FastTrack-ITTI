@@ -3,6 +3,7 @@
 ## Инструкция по запуску кода
 
 Для запуска сначала запустите приложение сервера \FastTrack-ITTI\x64\Release\ITTI.exe, а затем 2 приложения клиента \FastTrack-ITTI\x64\Debug\ITTI1.exe и \FastTrack-ITTI\x64\Debug\ITTI2.exe в любой последовательности.
+Для запуска проекта на Linux используйте build.sh.
 
 ## ITTI
 
