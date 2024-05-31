@@ -32,8 +32,8 @@
    - Реализовала обработку структуры **PathSwitchRequest**
    - Отвечала за поведения тестирования (написание тестов и их запуск)
 5. Неугодников Сергей Игоревич ([RexarSergey](https://github.com/RexarSergey))
-   - Реализовала обработку структуры **InitialContextSetupAcknowledgement**
+   - Реализовал обработку структуры **InitialContextSetupAcknowledgement**
    - Отвечал за составление документации
 7. Пудовкин Дмитрий Сергеевич ([Wirx74](https://github.com/Wirx74))
-   - Реализовала обработку структуры **AdmUeReleaseRequest**
+   - Реализовал обработку структуры **AdmUeReleaseRequest**
    - Реализовал логику передачи сообщений между клиентами и сервером
